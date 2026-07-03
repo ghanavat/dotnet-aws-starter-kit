@@ -28,13 +28,14 @@ public class ApiGatewayDeploymentStack : Stack
                 Description = "Development stage"
             }
         });
-
+        
         apiGateway.Root.AddProxy(new ProxyResourceOptions
         {
             AnyMethod = true,
-            DefaultIntegration = new LambdaIntegration(LambdaDeploymentStack.CleanArchitectureLambda, new LambdaIntegrationOptions
+            DefaultIntegration = new LambdaIntegration(LambdaDeploymentStack.CleanArchitectureLambda?.CurrentVersion, new LambdaIntegrationOptions
             {
-                AllowTestInvoke = false
+                AllowTestInvoke = false,
+                PassthroughBehavior = PassthroughBehavior.WHEN_NO_TEMPLATES
             })
         });
 

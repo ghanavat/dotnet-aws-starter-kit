@@ -1,22 +1,31 @@
 using Amazon.CDK;
+using Amazon.CDK.AWS.CodeDeploy;
 using Amazon.CDK.AWS.Lambda;
+using Amazon.CDK.AWS.Logs;
 using Constructs;
 
 namespace Ghanavats.CleanArchitecture.IaC.Aws.LambdaStack;
 
 public class LambdaDeploymentStack : Stack
 {
-    internal static Function CleanArchitectureLambda;
+    internal static Function? CleanArchitectureLambda;
 
-    internal LambdaDeploymentStack(Construct scope, string id, IStackProps props = null) : base(scope, id, props)
+    internal LambdaDeploymentStack(Construct scope, string id, IStackProps? props = null) : base(scope, id, props)
     {
         const string apiProjectPath = "src/Presentation/Ghanavats.CleanArchitecture.Api";
 
         var lambdaFunction = new Function(this, "CleanArchitecture_Function", new FunctionProps
         {
             Runtime = Runtime.DOTNET_10,
-            MemorySize = 1024,
+            MemorySize = 2048,
             Handler = "Ghanavats.CleanArchitecture.Api",
+            SnapStart = SnapStartConf.ON_PUBLISHED_VERSIONS,
+            LogGroup = new LogGroup(this, "CleanArchitecture_LogGroup", new LogGroupProps
+            {
+                LogGroupName = "/aws/lambda/CleanArchitecture_Function",
+                Retention = RetentionDays.ONE_WEEK,
+                RemovalPolicy = RemovalPolicy.DESTROY
+            }),
             Code = Code.FromAsset("../../../", new Amazon.CDK.AWS.S3.Assets.AssetOptions
             {
                 Bundling = new BundlingOptions
@@ -41,7 +50,22 @@ public class LambdaDeploymentStack : Stack
                 }
             })
         });
-        
+
+        // used to make sure each CDK synthesis produces a different Version
+        var version = lambdaFunction.CurrentVersion;
+        var alias = new Alias(this, "LambdaAlias", new AliasProps
+        {
+            AliasName = "Dev",
+            Version = version,
+            Description = "Development alias for the CleanArchitecture Lambda function"
+        });
+
+        _ = new LambdaDeploymentGroup(this, "DeploymentGroup", new LambdaDeploymentGroupProps
+        {
+            Alias = alias,
+            DeploymentConfig = LambdaDeploymentConfig.ALL_AT_ONCE
+        });
+
         CleanArchitectureLambda = lambdaFunction;
     }
 }
