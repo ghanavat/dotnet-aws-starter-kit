@@ -1,0 +1,7 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+      <RootNamespace>Ghanavats.DotnetAws.Core</RootNamespace>
+    </PropertyGroup>
+
+</Project>

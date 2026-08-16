@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+      <RootNamespace>Ghanavats.DotnetAws.UseCases</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\Shared\Ghanavats.DotnetAws.Shared\Ghanavats.DotnetAws.Shared.csproj" />
+        <ProjectReference Include="..\..\Core\Ghanavats.DotnetAws.Core\Ghanavats.DotnetAws.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="FluentValidation.DependencyInjectionExtensions"/>
+        <PackageReference Include="Ghanavats.ResultPattern"/>
+    </ItemGroup>
+
+</Project>

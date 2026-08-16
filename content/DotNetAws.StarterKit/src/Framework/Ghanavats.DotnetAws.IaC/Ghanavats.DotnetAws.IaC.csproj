@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <!-- Roll forward to future major versions of the netcoreapp as needed -->
+        <RollForward>Major</RollForward>
+        <RootNamespace>Ghanavats.DotnetAws.IaC</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <!-- CDK Construct Library dependencies -->
+        <PackageReference Include="Amazon.CDK.Lib"/>
+        <PackageReference Include="Constructs"/>
+
+        <!-- jsii Roslyn analyzers (un-comment to obtain compile-time checks for missing required props
+        <PackageReference Include="Amazon.Jsii.Analyzers" Version="*" PrivateAssets="all" />
+        -->
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\Application\Ghanavats.DotnetAws.UseCases\Ghanavats.DotnetAws.UseCases.csproj" />
+        <ProjectReference Include="..\..\Core\Ghanavats.DotnetAws.Core\Ghanavats.DotnetAws.Core.csproj" />
+        <ProjectReference Include="..\..\Shared\Ghanavats.DotnetAws.Shared\Ghanavats.DotnetAws.Shared.csproj" />
+        <ProjectReference Include="..\Ghanavats.DotnetAws.Infrastructure\Ghanavats.DotnetAws.Infrastructure.csproj" />
+    </ItemGroup>
+
+</Project>

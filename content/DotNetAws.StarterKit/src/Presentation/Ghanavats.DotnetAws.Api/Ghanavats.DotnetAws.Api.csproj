@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <AWSProjectType>Lambda</AWSProjectType>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <RootNamespace>Ghanavats.DotnetAws.Api</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Application\Ghanavats.DotnetAws.UseCases\Ghanavats.DotnetAws.UseCases.csproj" />
+    <ProjectReference Include="..\..\Framework\Ghanavats.DotnetAws.Infrastructure\Ghanavats.DotnetAws.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Shared\Ghanavats.DotnetAws.Shared\Ghanavats.DotnetAws.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Amazon.Lambda.AspNetCoreServer.Hosting" />
+    <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\Ghanavats.DotnetAws.Core\Ghanavats.DotnetAws.Core.csproj" />
+    <ProjectReference Include="..\..\Application\Ghanavats.DotnetAws.UseCases\Ghanavats.DotnetAws.UseCases.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AWSSDK.DynamoDBv2" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <RootNamespace>Ghanavats.DotnetAws.Infrastructure</RootNamespace>
+  </PropertyGroup>
+
+</Project>
