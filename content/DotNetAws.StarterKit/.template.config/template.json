@@ -7,8 +7,8 @@
     "ClassLibrary",
     "xUnit"
   ],
-  "name": "Ghanavats AWS Clean Architecture Starter Kit Template",
-  "description": "A deployable .NET Clean Architecture template featuring AWS Lambda, API Gateway, DynamoDB and Infrastructure as Code using AWS CDK.",
+  "name": "Ghanavats .NET on AWS Starter Kit Template",
+  "description": "A deployable .NET template featuring AWS Lambda, API Gateway, DynamoDB and Infrastructure as Code using AWS CDK.",
   "identity": "Ghanavats.DotnetAws.StarterKit.Template",
   "shortName": "ghanavats_dotnet_aws_starter",
   "tags": {
@@ -20,19 +20,6 @@
   "primaryOutputs": [
     {
       "path": "Ghanavats.DotnetAws.StarterKit.sln"
-    }
-  ],
-  "postActions": [
-    {
-      "actionId": "210D431B-A78B-4D2F-B762-4ED3E3EA9025",
-      "description": "Restore NuGet packages required by this project.",
-      "condition": "(!skipRestore)",
-      "continueOnError": true,
-      "manualInstructions": [
-        {
-          "text": "Run 'dotnet restore'"
-        }
-      ]
     }
   ],
   "symbols": {
@@ -57,25 +44,185 @@
       "datatype": "bool",
       "description": "Whether to include OpenTelemetry support in the project",
       "defaultValue": "true"
+    },
+    "featureNamespaceSegment": {
+      "type": "generated",
+      "generator": "switch",
+      "datatype": "string",
+      "replaces": "__FEATURE_NAMESPACE__",
+      "parameters": {
+        "evaluator": "C++",
+        "cases": [
+          {
+            "condition": "(architecture == 'clean-arc')",
+            "value": "UseCases"
+          },
+          {
+            "condition": "(architecture == 'vertical-slice')",
+            "value": "Api.Features"
+          }
+        ]
+      }
+    },
+    "infraToFeatureNamespaceSegment": {
+      "type": "generated",
+      "generator": "switch",
+      "datatype": "string",
+      "replaces": "__INFRA_TO_FEATURE_NAMESPACE__",
+      "parameters": {
+        "evaluator": "C++",
+        "cases": [
+          {
+            "condition": "(architecture == 'clean-arc')",
+            "value": "Infrastructure"
+          },
+          {
+            "condition": "(architecture == 'vertical-slice')",
+            "value": "Api.Features"
+          }
+        ]
+      }
+    },
+    "infraNamespaceSegment": {
+      "type": "generated",
+      "generator": "switch",
+      "datatype": "string",
+      "replaces": "__INFRA_DYNAMO_NAMESPACE__",
+      "parameters": {
+        "evaluator": "C++",
+        "cases": [
+          {
+            "condition": "(architecture == 'clean-arc')",
+            "value": "Infrastructure"
+          },
+          {
+            "condition": "(architecture == 'vertical-slice')",
+            "value": "Api"
+          }
+        ]
+      }
+    },
+    "domainNamespaceSegment": {
+      "type": "generated",
+      "generator": "switch",
+      "datatype": "string",
+      "replaces": "__ENTITIES_NAMESPACE__",
+      "parameters": {
+        "evaluator": "C++",
+        "cases": [
+          {
+            "condition": "(architecture == 'clean-arc')",
+            "value": "Core.Entities"
+          },
+          {
+            "condition": "(architecture == 'vertical-slice')",
+            "value": "Api.DomainEntities"
+          }
+        ]
+      }
+    },
+    "repositoryAccessModifier": {
+      "type": "generated",
+      "generator": "switch",
+      "datatype": "string",
+      "replaces": "public /*__REPOSITORY_ACCESS__*/",
+      "parameters": {
+        "evaluator": "C++",
+        "cases": [
+          {
+            "condition": "(architecture == 'clean-arc')",
+            "value": "internal"
+          },
+          {
+            "condition": "(architecture == 'vertical-slice')",
+            "value": "public"
+          }
+        ]
+      }
     }
   },
   "sources": [
     {
+      "source": "./",
+      "target": "./",
       "modifiers": [
         {
           "condition": "(architecture == 'clean-arc')",
           "exclude": [
-            "src/Presentation/Features/**/*"
+            "src/Presentation/Ghanavats.DotnetAws.Api/Features/**/*",
+            "src/Presentation/Ghanavats.DotnetAws.Api/DependencyInjection/**/*",
           ]
         },
         {
           "condition": "(architecture == 'vertical-slice')",
           "exclude": [
-            "src/Application/**/*",
-            "src/Core/**/*",
-            "src/Framework/Ghanavats.CleanArchitecture.Infrastructure/**/*",
-            "src/Shared/**/*"
+            "src/Application/Ghanavats.DotnetAws.UseCases/**/*",
+            "src/Core/Ghanavats.DotnetAws.Core/**/*",
+            "src/Framework/Ghanavats.DotnetAws.Infrastructure/**/*",
+            "src/Shared/Ghanavats.DotnetAws.Shared/**/*",
+            "tests/Ghanavats.DotnetAws.ArchitectureTests/**/*",
+            "tests/Ghanavats.DotnetAws.Core.Tests/**/*",
+            "tests/Ghanavats.DotnetAws.Infrastructure.Tests/**/*",
+            "tests/Ghanavats.DotnetAws.Shared.Tests/**/*",
+            "tests/Ghanavats.DotnetAws.UseCases.Tests/**/*"
           ]
+        }
+      ]
+    },
+    {
+      "condition": "(architecture == 'vertical-slice')",
+      "source": "./src/Application/Ghanavats.DotnetAws.UseCases/GetPersonDetails/",
+      "target": "./src/Presentation/Ghanavats.DotnetAws.Api/Features/GetPersonDetails/"
+    },
+    {
+      "condition": "(architecture == 'vertical-slice')",
+      "source": "./src/Application/Ghanavats.DotnetAws.UseCases/Contracts/",
+      "target": "./src/Presentation/Ghanavats.DotnetAws.Api/Features/GetPersonDetails/Repositories/"
+    },
+    {
+      "condition": "(architecture == 'vertical-slice')",
+      "source": "./src/Framework/Ghanavats.DotnetAws.Infrastructure/Repositories/",
+      "target": "./src/Presentation/Ghanavats.DotnetAws.Api/Features/GetPersonDetails/Repositories/"
+    },
+    {
+      "condition": "(architecture == 'vertical-slice')",
+      "source": "./src/Core/Ghanavats.DotnetAws.Core/Entities/",
+      "target": "./src/Presentation/Ghanavats.DotnetAws.Api/DomainEntities/"
+    },
+    {
+      "condition": "(architecture == 'vertical-slice')",
+      "source": "./src/Framework/Ghanavats.DotnetAws.Infrastructure/DynamoDbModels/",
+      "target": "./src/Presentation/Ghanavats.DotnetAws.Api/DynamoDbModels/"
+    }
+  ],
+  "postActions": [
+    {
+      "actionId": "B17581D1-C5C9-4489-8F0A-004BE667B814",
+      "description": "Add Ghanavats Result Pattern reference to the API project.",
+      "condition": "(architecture == \"vertical-slice\")",
+      "continueOnError": false,
+      "manualInstructions": [
+        {
+          "text": "Add Ghanavats.ResultPattern to the API project.'"
+        }
+      ],
+      "args": {
+        "targetFiles": [
+          "src/Presentation/Ghanavats.DotnetAws.Api/Ghanavats.DotnetAws.Api.csproj"
+        ],
+        "referenceType": "package",
+        "version": "2.0.1",
+        "reference": "Ghanavats.ResultPattern"
+      }
+    },
+    {
+      "actionId": "210D431B-A78B-4D2F-B762-4ED3E3EA9025",
+      "description": "Restore NuGet packages required by this project.",
+      "condition": "(!skipRestore)",
+      "continueOnError": false,
+      "manualInstructions": [
+        {
+          "text": "Run 'dotnet restore'"
         }
       ]
     }

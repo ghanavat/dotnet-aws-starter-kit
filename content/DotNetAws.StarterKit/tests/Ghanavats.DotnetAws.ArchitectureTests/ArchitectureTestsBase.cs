@@ -1,7 +1,7 @@
 using ArchUnitNET.Domain;
 using ArchUnitNET.Loader;
+using Ghanavats.DotnetAws.__ENTITIES_NAMESPACE__;
 using Ghanavats.DotnetAws.Shared;
-using Ghanavats.DotnetAws.Core.Entities;
 using Ghanavats.DotnetAws.Infrastructure.DependencyInjection;
 using Ghanavats.DotnetAws.UseCases.DependencyInjection;
 using Microsoft.VisualStudio.TestPlatform.TestHost;

@@ -1,11 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
 using Ghanavats.DotnetAws.Api.Endpoints;
-using Ghanavats.DotnetAws.Api.Extensions;
 
-namespace Ghanavats.DotnetAws.Api.DependencyInjection;
+namespace Ghanavats.DotnetAws.Api.Extensions;
 
 [ExcludeFromCodeCoverage]
-public static class RegisterMinimalEndpoints
+public static class RegisterMinimalEndpointsExtension
 {
     extension(WebApplication app)
     {

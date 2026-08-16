@@ -4,6 +4,7 @@
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
   <ItemGroup>
+    <PackageVersion Include="AWSSDK.Core" Version="4.0.101" />
     <PackageVersion Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
     <PackageVersion Include="Ghanavats.ResultPattern" Version="2.0.1" />
     <PackageVersion Include="Amazon.CDK.Lib" Version="2.265.0" />

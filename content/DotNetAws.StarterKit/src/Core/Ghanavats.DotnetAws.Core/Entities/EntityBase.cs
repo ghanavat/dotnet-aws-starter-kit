@@ -1,4 +1,4 @@
-namespace Ghanavats.DotnetAws.Core;
+namespace Ghanavats.DotnetAws.__ENTITIES_NAMESPACE__;
 
 public abstract class EntityBase
 {

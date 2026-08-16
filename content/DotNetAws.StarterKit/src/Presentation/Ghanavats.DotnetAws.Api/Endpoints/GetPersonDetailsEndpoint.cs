@@ -1,8 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 using Ghanavats.DotnetAws.Api.Extensions;
-using Ghanavats.DotnetAws.UseCases.GerPersonDetails;
-using Ghanavats.DotnetAws.UseCases.GerPersonDetails.Requests;
-using Ghanavats.DotnetAws.UseCases.GerPersonDetails.Responses;
+using Ghanavats.DotnetAws.UseCases.GetPersonDetails;
+using Ghanavats.DotnetAws.__FEATURE_NAMESPACE__.GetPersonDetails.Requests;
+using Ghanavats.DotnetAws.__FEATURE_NAMESPACE__.GetPersonDetails.Responses;
 using Ghanavats.ResultPattern;
 using Ghanavats.ResultPattern.Mapping;
 using Microsoft.AspNetCore.Mvc;

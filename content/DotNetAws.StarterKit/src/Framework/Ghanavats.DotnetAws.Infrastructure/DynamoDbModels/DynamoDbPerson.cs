@@ -1,7 +1,7 @@
 using Amazon.DynamoDBv2.DataModel;
-using Ghanavats.DotnetAws.Core.Entities;
+using Ghanavats.DotnetAws.__ENTITIES_NAMESPACE__;
 
-namespace Ghanavats.DotnetAws.Infrastructure.DynamoDbModels;
+namespace Ghanavats.DotnetAws.__INFRA_DYNAMO_NAMESPACE__.DynamoDbModels;
 
 [DynamoDBTable("People")]
 internal sealed class DynamoDbPerson

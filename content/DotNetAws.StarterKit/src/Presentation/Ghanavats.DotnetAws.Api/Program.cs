@@ -1,9 +1,13 @@
-using Ghanavats.DotnetAws.Api.DependencyInjection;
 using Ghanavats.DotnetAws.Api.Extensions;
 using Ghanavats.DotnetAws.Api.HealthChecks;
 using Ghanavats.DotnetAws.Api.Middleware;
+//#if(architecture == "clean-arc")
 using Ghanavats.DotnetAws.Infrastructure.DependencyInjection;
 using Ghanavats.DotnetAws.UseCases.DependencyInjection;
+//#endif
+//#if(architecture == "vertical-slice")
+using VerticalSliceDependencies = Ghanavats.DotnetAws.Api.DependencyInjection;
+//#endif
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,12 +17,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAWSLambdaHosting(LambdaEventSource.RestApi);
 builder.Services.AddLambdaWarmUps();
 
-// Add application dependencies
+// Add Application/Infrastructure dependencies
+//#if(architecture == "clean-arc")
+builder.Services.AddRepositories(builder.Configuration);
 builder.Services.AddValidators();
 builder.Services.AddUseCases();
-
-// Add Infrastructure dependencies
-builder.Services.AddRepositories(builder.Configuration);
+//#endif
+//#if(architecture == "vertical-slice")
+VerticalSliceDependencies.RegisterServices.AddValidators(builder.Services);
+VerticalSliceDependencies.RegisterServices.AddUseCases(builder.Services);
+VerticalSliceDependencies.RegisterServices.AddRepositories(builder.Services, builder.Configuration);
+//#endif
 
 builder.Services.AddDefaultAWSOptions(builder.Configuration.GetAWSOptions());
 

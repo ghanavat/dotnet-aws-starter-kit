@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
-using Ghanavats.DotnetAws.UseCases.Contracts;
-using Ghanavats.DotnetAws.UseCases.GerPersonDetails.Requests;
-using Ghanavats.DotnetAws.UseCases.GerPersonDetails.Responses;
+using Ghanavats.DotnetAws.__FEATURE_NAMESPACE__.Contracts;
+using Ghanavats.DotnetAws.__FEATURE_NAMESPACE__.GetPersonDetails.Requests;
+using Ghanavats.DotnetAws.__FEATURE_NAMESPACE__.GetPersonDetails.Responses;
 using Ghanavats.ResultPattern;
 using Microsoft.Extensions.Logging;
 
-namespace Ghanavats.DotnetAws.UseCases.GerPersonDetails;
+namespace Ghanavats.DotnetAws.UseCases.GetPersonDetails;
 
 public interface IGetPersonDetails
 {
@@ -21,8 +21,8 @@ public sealed class GetPersonDetailsUseCase : IGetPersonDetails
     private readonly IValidator<GetPersonDetailsRequest> _validator;
     private readonly ILogger<GetPersonDetailsUseCase> _logger;
 
-    public GetPersonDetailsUseCase(IPeopleRepository peopleRepository, 
-        IValidator<GetPersonDetailsRequest> validator, 
+    public GetPersonDetailsUseCase(IPeopleRepository peopleRepository,
+        IValidator<GetPersonDetailsRequest> validator,
         ILogger<GetPersonDetailsUseCase> logger)
     {
         _peopleRepository = peopleRepository;
@@ -48,7 +48,7 @@ public sealed class GetPersonDetailsUseCase : IGetPersonDetails
         {
             return Result.NotFound();
         }
-        
+
         return Result<GetPersonByIdResponse>.Success(person.ToResponse());
     }
 }

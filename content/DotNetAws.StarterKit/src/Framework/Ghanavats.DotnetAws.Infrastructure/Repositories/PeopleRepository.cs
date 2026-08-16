@@ -1,13 +1,13 @@
 using System.Diagnostics;
 using Amazon.DynamoDBv2.DataModel;
-using Ghanavats.DotnetAws.Core.Entities;
-using Ghanavats.DotnetAws.Infrastructure.DynamoDbModels;
-using Ghanavats.DotnetAws.UseCases.Contracts;
+using Ghanavats.DotnetAws.__ENTITIES_NAMESPACE__;
+using Ghanavats.DotnetAws.__FEATURE_NAMESPACE__.Contracts;
+using Ghanavats.DotnetAws.__INFRA_DYNAMO_NAMESPACE__.DynamoDbModels;
 using Microsoft.Extensions.Logging;
 
-namespace Ghanavats.DotnetAws.Infrastructure.Repositories;
+namespace Ghanavats.DotnetAws.__INFRA_TO_FEATURE_NAMESPACE__.Repositories;
 
-internal sealed class PeopleRepository : IPeopleRepository
+public /*__REPOSITORY_ACCESS__*/ sealed class PeopleRepository : IPeopleRepository
 {
     private readonly DynamoDBContext _dbContext;
     private readonly ILogger<PeopleRepository> _logger;

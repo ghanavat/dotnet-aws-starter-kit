@@ -1,21 +1,29 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <AWSProjectType>Lambda</AWSProjectType>
-    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-    <RootNamespace>Ghanavats.DotnetAws.Api</RootNamespace>
-  </PropertyGroup>
+    <PropertyGroup>
+        <AWSProjectType>Lambda</AWSProjectType>
+        <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+        <RootNamespace>Ghanavats.DotnetAws.Api</RootNamespace>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Application\Ghanavats.DotnetAws.UseCases\Ghanavats.DotnetAws.UseCases.csproj" />
-    <ProjectReference Include="..\..\Framework\Ghanavats.DotnetAws.Infrastructure\Ghanavats.DotnetAws.Infrastructure.csproj" />
-    <ProjectReference Include="..\..\Shared\Ghanavats.DotnetAws.Shared\Ghanavats.DotnetAws.Shared.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <!--#if(architecture == "clean-arc")-->
+        <ProjectReference Include="..\..\Application\Ghanavats.DotnetAws.UseCases\Ghanavats.DotnetAws.UseCases.csproj"/>
+        <ProjectReference Include="..\..\Framework\Ghanavats.DotnetAws.Infrastructure\Ghanavats.DotnetAws.Infrastructure.csproj"/>
+        <ProjectReference Include="..\..\Shared\Ghanavats.DotnetAws.Shared\Ghanavats.DotnetAws.Shared.csproj"/>
+        <!--#endif-->
+    </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Amazon.Lambda.AspNetCoreServer.Hosting" />
-    <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" />
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Amazon.Lambda.AspNetCoreServer.Hosting"/>
+        <PackageReference Include="AWSSDK.Extensions.NETCore.Setup"/>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi"/>
+
+        <!--#if (architecture == 'vertical-slice') -->
+        <PackageReference Include="Ghanavats.ResultPattern"/>
+        <PackageReference Include="AWSSDK.DynamoDBv2" />
+        <PackageReference Include="FluentValidation.DependencyInjectionExtensions"/>
+        <!--#endif-->
+    </ItemGroup>
 
 </Project>

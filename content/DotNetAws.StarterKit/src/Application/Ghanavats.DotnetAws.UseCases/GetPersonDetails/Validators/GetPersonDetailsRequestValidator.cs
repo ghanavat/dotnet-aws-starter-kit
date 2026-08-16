@@ -1,7 +1,7 @@
 using FluentValidation;
-using Ghanavats.DotnetAws.UseCases.GerPersonDetails.Requests;
+using Ghanavats.DotnetAws.__FEATURE_NAMESPACE__.GetPersonDetails.Requests;
 
-namespace Ghanavats.DotnetAws.UseCases.GerPersonDetails.Validators;
+namespace Ghanavats.DotnetAws.__FEATURE_NAMESPACE__.GetPersonDetails.Validators;
 
 public sealed class GetPersonDetailsRequestValidator : AbstractValidator<GetPersonDetailsRequest>
 {

@@ -10,6 +10,7 @@
     <ItemGroup>
         <!-- CDK Construct Library dependencies -->
         <PackageReference Include="Amazon.CDK.Lib"/>
+        <PackageReference Include="AWSSDK.Core" />
         <PackageReference Include="Constructs"/>
 
         <!-- jsii Roslyn analyzers (un-comment to obtain compile-time checks for missing required props
@@ -18,10 +19,12 @@
     </ItemGroup>
 
     <ItemGroup>
+        <!--#if(architecture == "clean-arc")-->
         <ProjectReference Include="..\..\Application\Ghanavats.DotnetAws.UseCases\Ghanavats.DotnetAws.UseCases.csproj" />
         <ProjectReference Include="..\..\Core\Ghanavats.DotnetAws.Core\Ghanavats.DotnetAws.Core.csproj" />
         <ProjectReference Include="..\..\Shared\Ghanavats.DotnetAws.Shared\Ghanavats.DotnetAws.Shared.csproj" />
         <ProjectReference Include="..\Ghanavats.DotnetAws.Infrastructure\Ghanavats.DotnetAws.Infrastructure.csproj" />
+        <!--#endif-->
     </ItemGroup>
 
 </Project>

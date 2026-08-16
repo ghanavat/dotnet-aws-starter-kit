@@ -1,4 +1,4 @@
-﻿namespace Ghanavats.DotnetAws.Core.Entities;
+﻿namespace Ghanavats.DotnetAws.__ENTITIES_NAMESPACE__;
 
 /// <summary>
 /// A greatly simplified sample Person entity.

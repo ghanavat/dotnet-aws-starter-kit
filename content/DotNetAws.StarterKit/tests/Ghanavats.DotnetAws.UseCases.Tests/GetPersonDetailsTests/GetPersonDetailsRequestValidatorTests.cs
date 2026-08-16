@@ -1,6 +1,6 @@
 using FluentValidation.TestHelper;
-using Ghanavats.DotnetAws.UseCases.GerPersonDetails.Requests;
-using Ghanavats.DotnetAws.UseCases.GerPersonDetails.Validators;
+using Ghanavats.DotnetAws.__FEATURE_NAMESPACE__.GetPersonDetails.Requests;
+using Ghanavats.DotnetAws.__FEATURE_NAMESPACE__.GetPersonDetails.Validators;
 
 namespace Ghanavats.DotnetAws.UseCases.Tests.GetPersonDetailsTests;
 

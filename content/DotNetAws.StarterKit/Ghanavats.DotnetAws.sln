@@ -5,6 +5,27 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{827E0CD3-B72D-47B6-A68D-7590B98EB39B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0AB3BF05-4346-4AA6-1389-037BE0695223}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{E68CD84D-E0E5-33D6-F5EB-1781B188017D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Framework", "Framework", "{E0AD1809-C64F-3D39-45E0-E424261CE16D}"
+EndProject
+#if(architecture == "clean-arc")
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{8D626EA8-CB54-BC41-363A-217881BEBA6E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{22BAF98C-8415-17C4-B26A-D537657BC863}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{0E3EAB1E-1001-41ED-941C-125EEBD5CBE4}"
+EndProject
+#endif
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ghanavats.DotnetAws.Api", "src\Presentation\Ghanavats.DotnetAws.Api\Ghanavats.DotnetAws.Api.csproj", "{898A2977-16B4-4F08-B7D8-70DF98673E46}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ghanavats.DotnetAws.Api.Tests", "tests\Ghanavats.DotnetAws.Api.Tests\Ghanavats.DotnetAws.Api.Tests.csproj", "{B7F5352F-4E1A-4236-8A99-E1C95CCADE0F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ghanavats.DotnetAws.IaC", "src\Framework\Ghanavats.DotnetAws.IaC\Ghanavats.DotnetAws.IaC.csproj", "{CDEC4EC0-8643-43A4-B8BF-10E8B0A695A0}"
+EndProject
+#if(architecture == "clean-arc")
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ghanavats.DotnetAws.UseCases", "src\Application\Ghanavats.DotnetAws.UseCases\Ghanavats.DotnetAws.UseCases.csproj", "{A3463358-2B9F-4FED-B9CF-011E800BEE7A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ghanavats.DotnetAws.Shared", "src\Shared\Ghanavats.DotnetAws.Shared\Ghanavats.DotnetAws.Shared.csproj", "{71F7F2D2-5506-4B5C-9FF2-CDFD3F91DC35}"
@@ -12,18 +33,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ghanavats.DotnetAws.Infrastructure", "src\Framework\Ghanavats.DotnetAws.Infrastructure\Ghanavats.DotnetAws.Infrastructure.csproj", "{2373B394-1DAE-4AA5-B1D2-1CD890C31FD6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ghanavats.DotnetAws.Core", "src\Core\Ghanavats.DotnetAws.Core\Ghanavats.DotnetAws.Core.csproj", "{907B3E50-C629-4F87-B167-A979209F564E}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0AB3BF05-4346-4AA6-1389-037BE0695223}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ghanavats.DotnetAws.Api.Tests", "tests\Ghanavats.DotnetAws.Api.Tests\Ghanavats.DotnetAws.Api.Tests.csproj", "{B7F5352F-4E1A-4236-8A99-E1C95CCADE0F}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{E68CD84D-E0E5-33D6-F5EB-1781B188017D}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{8D626EA8-CB54-BC41-363A-217881BEBA6E}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Framework", "Framework", "{E0AD1809-C64F-3D39-45E0-E424261CE16D}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{22BAF98C-8415-17C4-B26A-D537657BC863}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ghanavats.DotnetAws.UseCases.Tests", "tests\Ghanavats.DotnetAws.UseCases.Tests\Ghanavats.DotnetAws.UseCases.Tests.csproj", "{6DCDBEDA-094A-442D-B58C-218365E5E00C}"
 EndProject
@@ -33,6 +42,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ghanavats.DotnetAws.Core.Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ghanavats.DotnetAws.Shared.Tests", "tests\Ghanavats.DotnetAws.Shared.Tests\Ghanavats.DotnetAws.Shared.Tests.csproj", "{D4C8DDAE-F929-4D5E-804B-6B5A100B9FAB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ghanavats.DotnetAws.ArchitectureTests", "tests\Ghanavats.DotnetAws.ArchitectureTests\Ghanavats.DotnetAws.ArchitectureTests.csproj", "{2974DF9F-443F-45B4-A0FE-FB3745AE30BD}"
+EndProject
+#endif
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{6DB56DA9-9018-454B-9F21-7CD0E0A07205}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
@@ -40,14 +52,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 		Directory.Packages.props = Directory.Packages.props
 		Directory.Build.props = Directory.Build.props
 	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{0E3EAB1E-1001-41ED-941C-125EEBD5CBE4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ghanavats.DotnetAws.Api", "src\Presentation\Ghanavats.DotnetAws.Api\Ghanavats.DotnetAws.Api.csproj", "{898A2977-16B4-4F08-B7D8-70DF98673E46}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ghanavats.DotnetAws.ArchitectureTests", "tests\Ghanavats.DotnetAws.ArchitectureTests\Ghanavats.DotnetAws.ArchitectureTests.csproj", "{2974DF9F-443F-45B4-A0FE-FB3745AE30BD}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ghanavats.DotnetAws.IaC", "src\Framework\Ghanavats.DotnetAws.IaC\Ghanavats.DotnetAws.IaC.csproj", "{CDEC4EC0-8643-43A4-B8BF-10E8B0A695A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

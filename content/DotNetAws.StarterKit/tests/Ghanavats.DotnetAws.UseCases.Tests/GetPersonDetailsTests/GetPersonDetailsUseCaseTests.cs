@@ -1,10 +1,10 @@
 using System.Globalization;
 using FluentValidation;
 using FluentValidation.Results;
-using Ghanavats.DotnetAws.Core.Entities;
-using Ghanavats.DotnetAws.UseCases.Contracts;
-using Ghanavats.DotnetAws.UseCases.GerPersonDetails;
-using Ghanavats.DotnetAws.UseCases.GerPersonDetails.Requests;
+using Ghanavats.DotnetAws.__ENTITIES_NAMESPACE__;
+using Ghanavats.DotnetAws.__FEATURE_NAMESPACE__.Contracts;
+using Ghanavats.DotnetAws.__FEATURE_NAMESPACE__.GetPersonDetails.Requests;
+using Ghanavats.DotnetAws.UseCases.GetPersonDetails;
 using Ghanavats.ResultPattern.Enums;
 using Microsoft.Extensions.Logging;
 using Moq;
