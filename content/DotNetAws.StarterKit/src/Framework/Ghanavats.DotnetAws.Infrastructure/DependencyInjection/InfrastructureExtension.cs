@@ -22,8 +22,7 @@ public static class InfrastructureExtension
             {   
                 var clientConfig = new AmazonDynamoDBConfig
                 {
-                    RegionEndpoint = AwsRegionResolver.Resolve(configuration["AWS:Region"] 
-                                                               ?? throw new ArgumentNullException(nameof(configuration)))
+                    RegionEndpoint = AwsRegionResolver.Resolve(configuration["AWS:Region"]!)
                 };
                 var client = new AmazonDynamoDBClient(clientConfig);
 

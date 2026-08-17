@@ -8,7 +8,7 @@ public sealed class GetPersonDetailsRequestValidator : AbstractValidator<GetPers
     public GetPersonDetailsRequestValidator()
     {
         RuleFor(x => x.PersonId)
-            .Must(personId => Guid.TryParse(personId, out _)).WithMessage("PersonId must be a valid GUID")
-            .NotEmpty().WithMessage("PersonId is required");
+            .NotEmpty().WithMessage("PersonId is required")
+            .Must(personId => Guid.TryParse(personId, out _)).WithMessage("PersonId must be a valid GUID");
     }
 }
