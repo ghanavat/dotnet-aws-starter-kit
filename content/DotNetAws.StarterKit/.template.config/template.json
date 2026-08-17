@@ -150,7 +150,7 @@
           "condition": "(architecture == 'clean-arc')",
           "exclude": [
             "src/Presentation/Ghanavats.DotnetAws.Api/Features/**/*",
-            "src/Presentation/Ghanavats.DotnetAws.Api/DependencyInjection/**/*",
+            "src/Presentation/Ghanavats.DotnetAws.Api/DependencyInjection/**/*"
           ]
         },
         {
@@ -196,25 +196,6 @@
     }
   ],
   "postActions": [
-    {
-      "actionId": "B17581D1-C5C9-4489-8F0A-004BE667B814",
-      "description": "Add Ghanavats Result Pattern reference to the API project.",
-      "condition": "(architecture == \"vertical-slice\")",
-      "continueOnError": false,
-      "manualInstructions": [
-        {
-          "text": "Add Ghanavats.ResultPattern to the API project.'"
-        }
-      ],
-      "args": {
-        "targetFiles": [
-          "src/Presentation/Ghanavats.DotnetAws.Api/Ghanavats.DotnetAws.Api.csproj"
-        ],
-        "referenceType": "package",
-        "version": "2.0.1",
-        "reference": "Ghanavats.ResultPattern"
-      }
-    },
     {
       "actionId": "210D431B-A78B-4D2F-B762-4ED3E3EA9025",
       "description": "Restore NuGet packages required by this project.",
