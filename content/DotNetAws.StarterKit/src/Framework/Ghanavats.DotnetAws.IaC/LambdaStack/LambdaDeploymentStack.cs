@@ -14,15 +14,15 @@ public class LambdaDeploymentStack : Stack
     {
         const string apiProjectPath = "src/Presentation/Ghanavats.DotnetAws.Api";
 
-        var lambdaFunction = new Function(this, "CleanArchitecture_Function", new FunctionProps
+        var lambdaFunction = new Function(this, "DotNetAws_Function", new FunctionProps
         {
             Runtime = Runtime.DOTNET_10,
             MemorySize = 2048,
             Handler = "Ghanavats.DotnetAws.Api",
             SnapStart = SnapStartConf.ON_PUBLISHED_VERSIONS,
-            LogGroup = new LogGroup(this, "CleanArchitecture_LogGroup", new LogGroupProps
+            LogGroup = new LogGroup(this, "DotNetAws_LogGroup", new LogGroupProps
             {
-                LogGroupName = "/aws/lambda/CleanArchitecture_Function",
+                LogGroupName = "/aws/lambda/DotNetAws_Function",
                 Retention = RetentionDays.ONE_WEEK,
                 RemovalPolicy = RemovalPolicy.DESTROY
             }),
@@ -45,7 +45,7 @@ public class LambdaDeploymentStack : Stack
                         " && export DOTNET_CLI_HOME=/tmp" +
                         " && export NUGET_PACKAGES=/tmp/nuget" +
                         $" && dotnet restore {apiProjectPath}/Ghanavats.DotnetAws.Api.csproj" +
-                        $" && dotnet lambda package --project-location {apiProjectPath} --configuration Release --output-package /asset-output/cleanarchitecture_function.zip"
+                        $" && dotnet lambda package --project-location {apiProjectPath} --configuration Release --output-package /asset-output/dotnetaws_function.zip"
                     ]
                 }
             })
@@ -57,7 +57,7 @@ public class LambdaDeploymentStack : Stack
         {
             AliasName = "Dev",
             Version = version,
-            Description = "Development alias for the CleanArchitecture Lambda function"
+            Description = "Development alias for the DotNetAws Lambda function"
         });
 
         _ = new LambdaDeploymentGroup(this, "DeploymentGroup", new LambdaDeploymentGroupProps

@@ -26,8 +26,7 @@ public class DynamoDbDeploymentStack : Stack
                 MaxReadRequestUnits =  5,
                 MaxWriteRequestUnits = 5
             }),
-            RemovalPolicy = RemovalPolicy.DESTROY,
-            DeletionProtection = true
+            RemovalPolicy = RemovalPolicy.DESTROY
         });
 
         dynamoDbTable.GrantReadWriteData(LambdaDeploymentStack.CleanArchitectureLambda);

@@ -10,9 +10,9 @@ public class ApiGatewayDeploymentStack : Stack
 {
     internal ApiGatewayDeploymentStack(Construct scope, string id, IStackProps props = null) : base(scope, id, props)
     {
-        var apiGateway = new RestApi(this, "CleanArchitecture_StarterKit_Api", new RestApiProps
+        var apiGateway = new RestApi(this, "DotNetAws_StarterKit_Api", new RestApiProps
         {
-            RestApiName = "CleanArchitectureApi",
+            RestApiName = "DotNetAwsApi",
             Description = "API Gateway to interact with Lambda Rest API",
             ApiKeySourceType = ApiKeySourceType.HEADER,
             EndpointTypes = [EndpointType.REGIONAL],
@@ -41,7 +41,7 @@ public class ApiGatewayDeploymentStack : Stack
 
         var usagePlan = apiGateway.AddUsagePlan("usagePlan", new UsagePlanProps
         {
-            Name = "CleanArchitecture_UsagePlan",
+            Name = "DotNetAws_UsagePlan",
             Description = "Usage Plan for the API",
             Throttle = new ThrottleSettings
             {
@@ -60,7 +60,7 @@ public class ApiGatewayDeploymentStack : Stack
 
         var apiKey = apiGateway.AddApiKey("apiKey", new ApiKeyOptions
         {
-            ApiKeyName = "cleanarchitecture_starter_kit_apikey",
+            ApiKeyName = "dotnetaws_starter_kit_apikey",
             // Value: Not setting a value for the Value property will create the API Key with auto generated value. Ideal.
         });
 

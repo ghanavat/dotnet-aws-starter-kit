@@ -416,6 +416,23 @@ You should understand which AWS account and Region are active before deploying r
 
 ### Open the CDK project
 
+Open the `AwsEnvironmentCreator` class in the CDK project to edit the environment configuration. The class is located in the `src/Framework/Ghanavats.DotnetAws.IaC` project.
+You must configure the `account` and `region` values to match your AWS account and preferred Region:
+
+```csharp
+public class AwsEnvironmentCreator : IEnvironmentCreator
+{
+    public IEnvironment CreateEnvironment()
+    {
+        return new Environment
+        {
+            Account = "123456789012",
+            Region = "us-west-2" // or RegionEndpoint.EUWest1.SystemName
+        };
+    }
+}
+```
+
 From the generated solution directory:
 
 ```bash
