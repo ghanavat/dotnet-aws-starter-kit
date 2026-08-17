@@ -1,15 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <!-- The package metadata. Fill in the properties marked as TODO below -->
-    <!-- Follow the instructions on https://learn.microsoft.com/en-us/nuget/create-packages/package-authoring-best-practices -->
     <PackageId>Ghanavats.DotNetAws.Templates</PackageId>
     <PackageVersion>1.0</PackageVersion>
-    <Title>TODO: fill the package name here</Title>
-    <Authors>TODO: fill the author name or organization here</Authors>
-    <Description>TODO: fill the package description here</Description>
-    <PackageTags>TODO: fill the tags here</PackageTags>
-    <PackageProjectUrl>TODO: include a link to an associated project, repository, or company website</PackageProjectUrl>
+    <Title>Ghanavats .NET on AWS Starter Kit</Title>
+    <Authors>Saeed Ghanavat - Ghanavats Tech</Authors>
+    <Description>A configurable .NET solution template for building and deploying serverless APIs on AWS.</Description>
+    <PackageTags>Clear Architecture;Vertical Slice;DotNet Template;AWS;CDK;AWS Lambda;DynamoDB</PackageTags>
+    <PackageProjectUrl>https://github.com/ghanavat/dotnet-aws-starter-kit</PackageProjectUrl>
 
     <!-- Keep package type as 'Template' to show the package as a template package on nuget.org and make your template available in dotnet new search.-->
     <PackageType>Template</PackageType>
