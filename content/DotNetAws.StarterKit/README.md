@@ -208,7 +208,7 @@ dotnet build Ghanavats.DotnetAws.sln
 Run the generated tests:
 
 ```bash
-dotnet test Ghanavats.DotnetAws.sln
+dotnet test --solution Ghanavats.DotnetAws.sln
 ```
 
 The solution should build successfully before attempting an AWS deployment.
