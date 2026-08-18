@@ -44,7 +44,7 @@ public class GetPersonDetailsRequestValidatorTests
         var actual = await _validator.TestValidateAsync(expectedRequest, cancellationToken: TestContext.Current.CancellationToken);
         
         //Assert
-        actual.ShouldHaveValidationErrorFor(x => x.PersonId).WithErrorMessage("Invalid PersonId");
+        actual.ShouldHaveValidationErrorFor(x => x.PersonId).WithErrorMessage("PersonId must be a valid GUID");
     }
     
     [Fact]
