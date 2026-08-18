@@ -46,7 +46,16 @@ public sealed class GetPersonDetailsUseCase : IGetPersonDetails
         var person = await _peopleRepository.GetPersonById(Guid.Parse(request.PersonId));
         if (person.Id.Equals(Guid.Empty))
         {
+            if (_logger.IsEnabled(LogLevel.Information))
+            {
+                _logger.LogInformation("Person not found: {PersonId}", request.PersonId);
+            }
             return Result.NotFound();
+        }
+        
+        if (_logger.IsEnabled(LogLevel.Information))
+        {
+            _logger.LogInformation("Successfully fetched Person Details for PersonId: {PersonId}", request.PersonId);
         }
 
         return Result<GetPersonByIdResponse>.Success(person.ToResponse());

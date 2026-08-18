@@ -24,8 +24,11 @@ public sealed class ExceptionHandlerMiddleware : IExceptionHandler
             Detail = $"There has been a problem with your request. {exception.Message}",
             Type = exception.GetType().Name
         }, cancellationToken: cancellationToken);
-        
-        _logger.LogError("There has been a problem with your request.");
+
+        if (_logger.IsEnabled(LogLevel.Error))
+        {
+            _logger.LogError("There has been a problem with your request. {Message} - {StackTrace}" , exception.Message, exception.StackTrace);
+        }
 
         return true;
     }

@@ -27,7 +27,7 @@ internal static class PersonMapper
             if (source is null)
             {
                 // Maybe I should throw an exception here?
-                return null;
+                return new Person();
             }
             
             return Person.Rehydrate(Guid.Parse(source.PersonId), 

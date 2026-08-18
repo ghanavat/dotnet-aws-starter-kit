@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using Amazon.DynamoDBv2.DataModel;
 using Ghanavats.DotnetAws.__ENTITIES_NAMESPACE__;
 using Ghanavats.DotnetAws.__FEATURE_NAMESPACE__.Contracts;
@@ -21,16 +20,7 @@ public /*__REPOSITORY_ACCESS__*/ sealed class PeopleRepository : IPeopleReposito
 
     public async Task<Person> GetPersonById(Guid personId)
     {
-        var stopwatch = Stopwatch.StartNew();
         var result = await _dbContext.LoadAsync<DynamoDbPerson>(personId.ToString("D"));
-        stopwatch.Stop();
-
-        if (_logger.IsEnabled(LogLevel.Information))
-        {
-            _logger.LogInformation("Successfully fetched Person Details and it took: {Time}",
-                stopwatch.ElapsedMilliseconds);
-        }
-
         return result.ToDomain();
     }
 

@@ -441,6 +441,8 @@ cd src/Framework/Ghanavats.DotnetAws.IaC
 
 Confirm that the CDK application can be synthesised:
 
+> Note: Make sure you are at the root of the CDK project, not the solution root.
+> 
 ```bash
 cdk synth
 ```
