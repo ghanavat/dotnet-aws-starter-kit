@@ -30,6 +30,7 @@
     <ItemGroup>
         <ProjectReference Include="..\..\src\Framework\Ghanavats.DotnetAws.Infrastructure\Ghanavats.DotnetAws.Infrastructure.csproj" />
         <AssemblyAttribute Include="System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute"/>
+        <ProjectReference Include="..\..\src\Presentation\Ghanavats.DotnetAws.Api\Ghanavats.DotnetAws.Api.csproj" />
     </ItemGroup>
 
 </Project>
