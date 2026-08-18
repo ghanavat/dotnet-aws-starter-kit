@@ -202,13 +202,13 @@ dotnet restore
 Build the solution:
 
 ```bash
-dotnet build Ghanavats.DotnetAws.StarterKit.sln
+dotnet build Ghanavats.DotnetAws.sln
 ```
 
 Run the generated tests:
 
 ```bash
-dotnet test Ghanavats.DotnetAws.StarterKit.sln
+dotnet test Ghanavats.DotnetAws.sln
 ```
 
 The solution should build successfully before attempting an AWS deployment.
