@@ -7,11 +7,10 @@ on:
     types: [ published ]
 
 jobs:
-  build-and-publish:
+  build:
     permissions:
       id-token: write  # enable GitHub OIDC token issuance for this job
-
-  pack:
+      contents: read
     runs-on: ubuntu-latest
 
     steps:
