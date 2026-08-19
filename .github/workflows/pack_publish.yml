@@ -12,6 +12,7 @@ jobs:
       id-token: write  # enable GitHub OIDC token issuance for this job
       contents: read
     runs-on: ubuntu-latest
+    environment: release
 
     steps:
       - name: NuGet login (OIDC → temp API key)
