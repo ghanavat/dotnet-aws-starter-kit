@@ -1,0 +1,31 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+# The argument '--ignore-exit-code 8' is used to ignore the exit code 8 which indicates that no tests were found. 
+
+name: .NET CI pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 10.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build ./content/DotNetAws.StarterKit/Ghanavats.DotnetAws.sln --configuration Release
+    - name: Test
+      run: dotnet test --solution ./content/DotNetAws.StarterKit/Ghanavats.DotnetAws.sln --framework net10.0 --ignore-exit-code 8
