@@ -7,8 +7,9 @@ on:
     types: [ published ]
 
 jobs:
-  permissions:
-    id-token: write  # enable GitHub OIDC token issuance for this job
+  build-and-publish:
+    permissions:
+      id-token: write  # enable GitHub OIDC token issuance for this job
 
   pack:
     runs-on: ubuntu-latest
