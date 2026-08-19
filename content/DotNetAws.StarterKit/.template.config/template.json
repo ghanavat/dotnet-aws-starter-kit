@@ -39,12 +39,6 @@
         }
       ]
     },
-    "include-opentelemetry": {
-      "type": "parameter",
-      "datatype": "bool",
-      "description": "Whether to include OpenTelemetry support in the project",
-      "defaultValue": "true"
-    },
     "featureNamespaceSegment": {
       "type": "generated",
       "generator": "switch",
