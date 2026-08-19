@@ -7,7 +7,7 @@
     "ClassLibrary",
     "xUnit"
   ],
-  "name": "Ghanavats .NET on AWS Starter Kit Template",
+  "name": "Ghanavats .NET on AWS Starter Kit",
   "description": "A deployable .NET template featuring AWS Lambda, API Gateway, DynamoDB and Infrastructure as Code using AWS CDK.",
   "identity": "Ghanavats.DotnetAws.StarterKit.Template",
   "shortName": "ghanavats_dotnet_aws_starter",

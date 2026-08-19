@@ -2,13 +2,17 @@
 
   <PropertyGroup>
     <PackageId>Ghanavats.DotNetAws.Templates</PackageId>
-    <PackageVersion>1.0</PackageVersion>
+    <PackageVersion>1.0.1</PackageVersion>
     <Title>Ghanavats .NET on AWS Starter Kit</Title>
-    <Authors>Saeed Ghanavat - Ghanavats Tech</Authors>
+    <Authors>Saeed Ghanavat</Authors>
     <Description>A configurable .NET solution template for building and deploying serverless APIs on AWS.</Description>
     <PackageTags>Clear Architecture;Vertical Slice;DotNet Template;AWS;CDK;AWS Lambda;DynamoDB</PackageTags>
-    <PackageProjectUrl>https://github.com/ghanavat/dotnet-aws-starter-kit</PackageProjectUrl>
-
+    <PackageProjectUrl>https://www.nuget.org/packages/Ghanavats.DotNetAws.Templates#readme-body-tab</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/ghanavat/dotnet-aws-starter-kit</RepositoryUrl>
+    <Copyright>Copyright © 2026 Ghanavats Tech</Copyright>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageLicenseUrl>LICENSE</PackageLicenseUrl>
+    
     <!-- Keep package type as 'Template' to show the package as a template package on nuget.org and make your template available in dotnet new search.-->
     <PackageType>Template</PackageType>
     <TargetFramework>net10.0</TargetFramework>
