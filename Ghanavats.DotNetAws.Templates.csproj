@@ -11,7 +11,7 @@
     <RepositoryUrl>https://github.com/ghanavat/dotnet-aws-starter-kit</RepositoryUrl>
     <Copyright>Copyright © 2026 Ghanavats Tech</Copyright>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-    <PackageLicenseUrl>LICENSE</PackageLicenseUrl>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
     
     <!-- Keep package type as 'Template' to show the package as a template package on nuget.org and make your template available in dotnet new search.-->
     <PackageType>Template</PackageType>
