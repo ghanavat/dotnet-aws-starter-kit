@@ -19,7 +19,7 @@
   "preferNameDirectory": true,
   "primaryOutputs": [
     {
-      "path": "Ghanavats.DotnetAws.StarterKit.sln"
+      "path": "Ghanavats.DotnetAws.sln"
     }
   ],
   "symbols": {

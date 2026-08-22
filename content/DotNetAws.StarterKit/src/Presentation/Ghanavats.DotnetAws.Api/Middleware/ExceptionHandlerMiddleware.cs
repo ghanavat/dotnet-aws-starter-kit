@@ -21,7 +21,7 @@ public sealed class ExceptionHandlerMiddleware : IExceptionHandler
             Status = StatusCodes.Status500InternalServerError,
             Title = "Server responded with error",
             Instance = httpContext.Request.Path,
-            Detail = $"There has been a problem with your request. {exception.Message}",
+            Detail = "There has been a problem with your request.",
             Type = exception.GetType().Name
         }, cancellationToken: cancellationToken);
 

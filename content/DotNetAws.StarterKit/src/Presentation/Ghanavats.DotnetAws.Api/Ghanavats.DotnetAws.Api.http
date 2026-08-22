@@ -1,0 +1,6 @@
+@Ghanavats.DotnetAws.Api_HostAddress = http://localhost:5251
+
+GET {{Ghanavats.DotnetAws.Api_HostAddress}}/
+Accept: application/json
+
+###

@@ -22,11 +22,10 @@ internal static class PersonMapper
 {
     extension(DynamoDbPerson? source)
     {
-        public Person? ToDomain()
+        public Person ToDomain()
         {
             if (source is null)
             {
-                // Maybe I should throw an exception here?
                 return new Person();
             }
             

@@ -31,11 +31,12 @@ internal static class RegisterServices
 
             services.AddSingleton<DynamoDBContext>(sp =>
             {
+                var awsRegion = configuration["AWS:Region"];
+                ArgumentException.ThrowIfNullOrWhiteSpace(awsRegion);
+                
                 var clientConfig = new AmazonDynamoDBConfig
                 {
-                    RegionEndpoint = AwsRegionResolver.Resolve(configuration["AWS:Region"]
-                                                               ?? throw new ArgumentNullException(
-                                                                   nameof(configuration)))
+                    RegionEndpoint = AwsRegionResolver.Resolve(awsRegion)
                 };
                 var client = new AmazonDynamoDBClient(clientConfig);
 

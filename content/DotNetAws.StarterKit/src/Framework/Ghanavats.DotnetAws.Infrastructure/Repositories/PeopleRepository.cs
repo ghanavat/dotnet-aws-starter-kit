@@ -26,15 +26,16 @@ public /*__REPOSITORY_ACCESS__*/ sealed class PeopleRepository : IPeopleReposito
 
     public async Task CreatePerson(Person person)
     {
-        var newItem = Person.Create("Test1", "test1@domcin.com", "123456",
-            new DateTime(1990, 01, 01).ToString("yyyy-MM-dd"));
+        var dateOfBirth = DateTime.Parse(person.DateOfBirth).ToString("yyyy-MM-dd");
+        var newPerson = Person.Create(person.Name, person.Email, person.Phone, dateOfBirth);
+        
         var dynamoDbPerson = new DynamoDbPerson
         {
-            PersonId = newItem.Id.ToString("D"),
-            Name = newItem.Name,
-            Email = newItem.Email,
-            Phone = newItem.Phone,
-            DateOfBirth = newItem.DateOfBirth
+            PersonId = newPerson.Id.ToString("D"),
+            Name = newPerson.Name,
+            Email = newPerson.Email,
+            Phone = newPerson.Phone,
+            DateOfBirth = newPerson.DateOfBirth
         };
 
         await _dbContext.SaveAsync(dynamoDbPerson);

@@ -8,7 +8,7 @@ namespace Ghanavats.DotnetAws.IaC.LambdaStack;
 
 public class LambdaDeploymentStack : Stack
 {
-    internal static Function? CleanArchitectureLambda;
+    internal static Function? DotnetAwsLambda { get; private set; }
 
     internal LambdaDeploymentStack(Construct scope, string id, IStackProps? props = null) : base(scope, id, props)
     {
@@ -66,6 +66,6 @@ public class LambdaDeploymentStack : Stack
             DeploymentConfig = LambdaDeploymentConfig.ALL_AT_ONCE
         });
 
-        CleanArchitectureLambda = lambdaFunction;
+        DotnetAwsLambda = lambdaFunction;
     }
 }

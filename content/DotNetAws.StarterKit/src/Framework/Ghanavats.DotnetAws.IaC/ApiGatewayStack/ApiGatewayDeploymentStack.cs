@@ -8,7 +8,7 @@ namespace Ghanavats.DotnetAws.IaC.ApiGatewayStack;
 
 public class ApiGatewayDeploymentStack : Stack
 {
-    internal ApiGatewayDeploymentStack(Construct scope, string id, IStackProps props = null) : base(scope, id, props)
+    internal ApiGatewayDeploymentStack(Construct scope, string id, IStackProps? props = null) : base(scope, id, props)
     {
         var apiGateway = new RestApi(this, "DotNetAws_StarterKit_Api", new RestApiProps
         {
@@ -28,11 +28,16 @@ public class ApiGatewayDeploymentStack : Stack
                 Description = "Development stage"
             }
         });
+
+        if (LambdaDeploymentStack.DotnetAwsLambda is null)
+        {
+            throw new InvalidOperationException("Lambda function is not initialised. Ensure that the LambdaDeploymentStack is deployed before the ApiGatewayDeploymentStack.");
+        }
         
         apiGateway.Root.AddProxy(new ProxyResourceOptions
         {
             AnyMethod = true,
-            DefaultIntegration = new LambdaIntegration(LambdaDeploymentStack.CleanArchitectureLambda?.CurrentVersion, new LambdaIntegrationOptions
+            DefaultIntegration = new LambdaIntegration(LambdaDeploymentStack.DotnetAwsLambda.CurrentVersion, new LambdaIntegrationOptions
             {
                 AllowTestInvoke = false,
                 PassthroughBehavior = PassthroughBehavior.WHEN_NO_TEMPLATES

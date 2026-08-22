@@ -202,13 +202,15 @@ dotnet restore
 Build the solution:
 
 ```bash
+cd content/DotNetAws.StarterKit
 dotnet build Ghanavats.DotnetAws.sln
 ```
 
 Run the generated tests:
 
 ```bash
-dotnet test --solution Ghanavats.DotnetAws.sln
+cd content/DotNetAws.StarterKit
+dotnet test --ignore-exit-code 8
 ```
 
 The solution should build successfully before attempting an AWS deployment.
@@ -420,14 +422,14 @@ Open the `AwsEnvironmentCreator` class in the CDK project to edit the environmen
 You must configure the `account` and `region` values to match your AWS account and preferred Region:
 
 ```csharp
-public class AwsEnvironmentCreator : IEnvironmentCreator
+public static class AwsEnvironmentCreator : IEnvironmentCreator
 {
-    public IEnvironment CreateEnvironment()
+    public IEnvironment AwsEnvironmentCreator()
     {
         return new Environment
         {
-            Account = "123456789012",
-            Region = "us-west-2" // or RegionEndpoint.EUWest1.SystemName
+            Account = "YourAWSAccountId",
+            Region = RegionEndpoint.EUWest1.SystemName
         };
     }
 }

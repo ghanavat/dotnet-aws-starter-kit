@@ -8,7 +8,7 @@
   "profile": "default",
   "region": "eu-west-1",
   "configuration": "Release",
-  "s3-prefix": "Ghanavats.CleanArchitecture.Api/",
+  "s3-prefix": "Ghanavats.DotnetAws.Api/",
   "template": "serverless.template",
   "template-parameters": ""
 }

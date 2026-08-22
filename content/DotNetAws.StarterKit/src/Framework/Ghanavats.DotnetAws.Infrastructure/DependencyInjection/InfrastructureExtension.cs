@@ -20,9 +20,12 @@ public static class InfrastructureExtension
 
             services.AddSingleton<DynamoDBContext>(sp =>
             {   
+                var awsRegion = configuration["AWS:Region"];
+                ArgumentException.ThrowIfNullOrWhiteSpace(awsRegion);
+                
                 var clientConfig = new AmazonDynamoDBConfig
                 {
-                    RegionEndpoint = AwsRegionResolver.Resolve(configuration["AWS:Region"]!)
+                    RegionEndpoint = AwsRegionResolver.Resolve(awsRegion)
                 };
                 var client = new AmazonDynamoDBClient(clientConfig);
 

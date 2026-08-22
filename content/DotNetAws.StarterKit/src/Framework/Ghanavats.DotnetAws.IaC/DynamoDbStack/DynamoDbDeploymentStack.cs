@@ -8,10 +8,7 @@ namespace Ghanavats.DotnetAws.IaC.DynamoDbStack;
 
 public class DynamoDbDeploymentStack : Stack
 {
-    public static TableV2 DynamoDbTableObject { get; private set; }
-    
-    public DynamoDbDeploymentStack(Construct scope, string id, IStackProps props = null) 
-        : base(scope, id, props)
+    public DynamoDbDeploymentStack(Construct scope, string id, IStackProps? props = null) : base(scope, id, props)
     {
         var dynamoDbTable = new TableV2(this, "people_table", new TablePropsV2
         {
@@ -23,15 +20,20 @@ public class DynamoDbDeploymentStack : Stack
             },
             Billing = Billing.OnDemand(new MaxThroughputProps
             {
-                MaxReadRequestUnits =  5,
+                /*these need raising
+                 for anything beyond local experimentation*/
+                MaxReadRequestUnits = 5,
                 MaxWriteRequestUnits = 5
             }),
             RemovalPolicy = RemovalPolicy.DESTROY
         });
 
-        dynamoDbTable.GrantReadWriteData(LambdaDeploymentStack.CleanArchitectureLambda);
-        LambdaDeploymentStack.CleanArchitectureLambda.AddEnvironment("PEOPLE_TABLE_NAME", dynamoDbTable.TableName);
+        if (LambdaDeploymentStack.DotnetAwsLambda is null)
+        {
+            throw new InvalidOperationException("Lambda function is not initialised. Ensure that the LambdaDeploymentStack is deployed before the DynamoDbDeploymentStack.");
+        }
         
-        DynamoDbTableObject = dynamoDbTable;
+        dynamoDbTable.GrantReadWriteData(LambdaDeploymentStack.DotnetAwsLambda);
+        LambdaDeploymentStack.DotnetAwsLambda.AddEnvironment("PEOPLE_TABLE_NAME", dynamoDbTable.TableName);
     }
 }
