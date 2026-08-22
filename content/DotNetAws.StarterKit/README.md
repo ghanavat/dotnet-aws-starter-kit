@@ -424,7 +424,7 @@ You must configure the `account` and `region` values to match your AWS account a
 ```csharp
 public static class AwsEnvironmentCreator : IEnvironmentCreator
 {
-    public Environment SetEnvironment()
+    public static Environment SetEnvironment()
     {
         return new Environment
         {
