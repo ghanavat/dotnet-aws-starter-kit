@@ -77,11 +77,11 @@
         ]
       }
     },
-    "infraNamespaceSegment": {
+    "infraToApiNamespaceSegment": {
       "type": "generated",
       "generator": "switch",
       "datatype": "string",
-      "replaces": "__INFRA_DYNAMO_NAMESPACE__",
+      "replaces": "__INFRA_TO_API_NAMESPACE__",
       "parameters": {
         "evaluator": "C++",
         "cases": [
@@ -111,6 +111,25 @@
           {
             "condition": "(architecture == 'vertical-slice')",
             "value": "Api.DomainEntities"
+          }
+        ]
+      }
+    },
+    "useCasesTestsNamespaceSegment": {
+      "type": "generated",
+      "generator": "switch",
+      "datatype": "string",
+      "replaces": "__USECASES_TO_API_NAMESPACE__",
+      "parameters": {
+        "evaluator": "C++",
+        "cases": [
+          {
+            "condition": "(architecture == 'clean-arc')",
+            "value": "UseCases"
+          },
+          {
+            "condition": "(architecture == 'vertical-slice')",
+            "value": "Api"
           }
         ]
       }
@@ -187,6 +206,16 @@
       "condition": "(architecture == 'vertical-slice')",
       "source": "./src/Framework/Ghanavats.DotnetAws.Infrastructure/DynamoDbModels/",
       "target": "./src/Presentation/Ghanavats.DotnetAws.Api/DynamoDbModels/"
+    },
+    {
+      "condition": "(architecture == 'vertical-slice')",
+      "source": "./tests/Ghanavats.DotnetAws.UseCases.Tests/GetPersonDetailsTests/",
+      "target": "./tests/Ghanavats.DotnetAws.Api.Tests/GetPersonDetailsTests/"
+    },
+    {
+      "condition": "(architecture == 'vertical-slice')",
+      "source": "./tests/Ghanavats.DotnetAws.Infrastructure.Tests/RepositoryTests/",
+      "target": "./tests/Ghanavats.DotnetAws.Api.Tests/GetPersonDetailsTests/"
     }
   ],
   "postActions": [

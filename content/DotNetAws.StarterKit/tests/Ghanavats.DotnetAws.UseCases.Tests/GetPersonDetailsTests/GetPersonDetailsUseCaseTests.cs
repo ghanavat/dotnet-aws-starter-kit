@@ -9,7 +9,7 @@ using Ghanavats.ResultPattern.Enums;
 using Microsoft.Extensions.Logging;
 using Moq;
 
-namespace Ghanavats.DotnetAws.UseCases.Tests.GetPersonDetailsTests;
+namespace Ghanavats.DotnetAws.__USECASES_TO_API_NAMESPACE__.Tests.GetPersonDetailsTests;
 
 public class GetPersonDetailsUseCaseTests
 {
@@ -73,7 +73,7 @@ public class GetPersonDetailsUseCaseTests
     }
     
     [Fact]
-    public async Task GetDetails_ShouldReturnSuccessResult_WhenRequestedPersonNotFound()
+    public async Task GetDetails_ShouldReturnNotFoundResult_WhenRequestedPersonNotFound()
     {
         //Arrange
         var expectedRequest = new GetPersonDetailsRequest
@@ -82,7 +82,7 @@ public class GetPersonDetailsUseCaseTests
         };
 
         _peopleRepositoryMock.Setup(x => x.GetPersonById(It.IsAny<Guid>()))
-            .ReturnsAsync(new Person());
+            .ReturnsAsync((Person?)null);
         _validatorMock.Setup(x => x.ValidateAsync(It.IsAny<GetPersonDetailsRequest>())).ReturnsAsync(new ValidationResult());
         _loggerMock.Setup(x => x.IsEnabled(It.IsAny<LogLevel>())).Returns(true);
         

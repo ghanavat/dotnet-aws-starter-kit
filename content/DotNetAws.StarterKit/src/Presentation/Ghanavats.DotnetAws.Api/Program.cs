@@ -32,7 +32,7 @@ VerticalSliceDependencies.RegisterServices.AddRepositories(builder.Services, bui
 builder.Services.AddDefaultAWSOptions(builder.Configuration.GetAWSOptions());
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi("aws_cleanArchitecture_starterKit");
+builder.Services.AddOpenApi("dotnetaws_starterKit");
 
 builder.Services.AddHostedService<StartupBackgroundService>();
 builder.Services.AddSingleton<StartupHealthCheck>();

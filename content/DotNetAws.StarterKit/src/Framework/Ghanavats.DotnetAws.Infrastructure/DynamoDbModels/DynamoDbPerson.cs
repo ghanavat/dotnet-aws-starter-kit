@@ -1,7 +1,10 @@
+using System.Runtime.CompilerServices;
 using Amazon.DynamoDBv2.DataModel;
 using Ghanavats.DotnetAws.__ENTITIES_NAMESPACE__;
 
-namespace Ghanavats.DotnetAws.__INFRA_DYNAMO_NAMESPACE__.DynamoDbModels;
+[assembly: InternalsVisibleTo("Ghanavats.DotnetAws.Infrastructure.Tests")]
+
+namespace Ghanavats.DotnetAws.__INFRA_TO_API_NAMESPACE__.DynamoDbModels;
 
 [DynamoDBTable("People")]
 internal sealed class DynamoDbPerson
@@ -22,11 +25,11 @@ internal static class PersonMapper
 {
     extension(DynamoDbPerson? source)
     {
-        public Person ToDomain()
+        public Person? ToDomain()
         {
             if (source is null)
             {
-                return new Person();
+                return null;
             }
             
             return Person.Rehydrate(Guid.Parse(source.PersonId), 

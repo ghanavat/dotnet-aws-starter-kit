@@ -1,24 +1,20 @@
 using Amazon.DynamoDBv2.DataModel;
 using Ghanavats.DotnetAws.__ENTITIES_NAMESPACE__;
 using Ghanavats.DotnetAws.__FEATURE_NAMESPACE__.Contracts;
-using Ghanavats.DotnetAws.__INFRA_DYNAMO_NAMESPACE__.DynamoDbModels;
-using Microsoft.Extensions.Logging;
+using Ghanavats.DotnetAws.__INFRA_TO_API_NAMESPACE__.DynamoDbModels;
 
 namespace Ghanavats.DotnetAws.__INFRA_TO_FEATURE_NAMESPACE__.Repositories;
 
 public /*__REPOSITORY_ACCESS__*/ sealed class PeopleRepository : IPeopleRepository
 {
-    private readonly DynamoDBContext _dbContext;
-    private readonly ILogger<PeopleRepository> _logger;
+    private readonly IDynamoDBContext _dbContext;
 
-    public PeopleRepository(ILogger<PeopleRepository> logger,
-        DynamoDBContext dbContext)
+    public PeopleRepository(IDynamoDBContext dbContext)
     {
-        _logger = logger;
         _dbContext = dbContext;
     }
 
-    public async Task<Person> GetPersonById(Guid personId)
+    public async Task<Person?> GetPersonById(Guid personId)
     {
         var result = await _dbContext.LoadAsync<DynamoDbPerson>(personId.ToString("D"));
         return result.ToDomain();
@@ -26,7 +22,7 @@ public /*__REPOSITORY_ACCESS__*/ sealed class PeopleRepository : IPeopleReposito
 
     public async Task CreatePerson(Person person)
     {
-        var dateOfBirth = DateTime.Parse(person.DateOfBirth).ToString("yyyy-MM-dd");
+        var dateOfBirth = DateTime.Parse(person.DateOfBirth).ToString("dd-MM-yyyy");
         var newPerson = Person.Create(person.Name, person.Email, person.Phone, dateOfBirth);
         
         var dynamoDbPerson = new DynamoDbPerson

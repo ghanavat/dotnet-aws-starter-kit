@@ -12,6 +12,7 @@
     <ItemGroup>
         <PackageReference Include="coverlet.collector"/>
         <PackageReference Include="Microsoft.NET.Test.Sdk"/>
+        <PackageReference Include="Moq" />
         <PackageReference Include="xunit.runner.visualstudio"/>
         <PackageReference Include="xunit.v3"/>
         <PackageReference Include="xunit.v3.assert"/>
@@ -22,8 +23,11 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\src\Framework\Ghanavats.DotnetAws.Infrastructure\Ghanavats.DotnetAws.Infrastructure.csproj" />
         <AssemblyAttribute Include="System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\Framework\Ghanavats.DotnetAws.Infrastructure\Ghanavats.DotnetAws.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>
