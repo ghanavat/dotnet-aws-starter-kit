@@ -8,7 +8,7 @@
     "AspNetCoreFunction": {
       "Type": "AWS::Serverless::Function",
       "Properties": {
-        "Handler": "Ghanavats.CleanArchitecture.Api",
+        "Handler": "Ghanavats.DotnetAws.Api",
         "Runtime": "dotnet10",
         "CodeUri": "",
         "MemorySize": 512,
