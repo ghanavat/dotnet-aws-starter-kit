@@ -422,7 +422,7 @@ Open the `AwsEnvironmentCreator` class in the CDK project to edit the environmen
 You must configure the `account` and `region` values to match your AWS account and preferred Region:
 
 ```csharp
-public static class AwsEnvironmentCreator : IEnvironmentCreator
+public static class AwsEnvironmentCreator
 {
     public static Environment SetEnvironment()
     {
