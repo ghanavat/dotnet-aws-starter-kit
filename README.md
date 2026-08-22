@@ -1,5 +1,7 @@
 [![.NET CI pipeline](https://github.com/ghanavat/dotnet-aws-starter-kit/actions/workflows/continues_integration.yml/badge.svg)](https://github.com/ghanavat/dotnet-aws-starter-kit/actions/workflows/continues_integration.yml)
 
+[![Publish to NuGet Org](https://github.com/ghanavat/dotnet-aws-starter-kit/actions/workflows/pack_publish.yml/badge.svg)](https://github.com/ghanavat/dotnet-aws-starter-kit/actions/workflows/pack_publish.yml)
+
 # .NET AWS Starter Kit
 A configurable .NET 10 solution template for building and deploying serverless APIs on AWS. It combines an ASP.NET Core Minimal API with AWS Lambda, API Gateway, DynamoDB, and infrastructure defined in C# using AWS CDK.
 
