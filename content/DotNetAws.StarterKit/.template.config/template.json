@@ -134,11 +134,30 @@
         ]
       }
     },
-    "repositoryAccessModifier": {
+    "publicToInternalAccessModifier": {
       "type": "generated",
       "generator": "switch",
       "datatype": "string",
-      "replaces": "public /*__REPOSITORY_ACCESS__*/",
+      "replaces": "public /*__PUBLIC_TO_INTERNAL_ACCESS__*/",
+      "parameters": {
+        "evaluator": "C++",
+        "cases": [
+          {
+            "condition": "(architecture == 'clean-arc')",
+            "value": "internal"
+          },
+          {
+            "condition": "(architecture == 'vertical-slice')",
+            "value": "public"
+          }
+        ]
+      }
+    },
+    "internalToPublicAccessModifier": {
+      "type": "generated",
+      "generator": "switch",
+      "datatype": "string",
+      "replaces": "internal /*__INTERNAL_TO_PUBLIC_ACCESS__*/",
       "parameters": {
         "evaluator": "C++",
         "cases": [

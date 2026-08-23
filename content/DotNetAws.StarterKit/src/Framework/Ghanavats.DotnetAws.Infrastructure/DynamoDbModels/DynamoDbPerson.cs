@@ -7,7 +7,7 @@ using Ghanavats.DotnetAws.__ENTITIES_NAMESPACE__;
 namespace Ghanavats.DotnetAws.__INFRA_TO_API_NAMESPACE__.DynamoDbModels;
 
 [DynamoDBTable("People")]
-internal sealed class DynamoDbPerson
+internal /*__INTERNAL_TO_PUBLIC_ACCESS__*/ sealed class DynamoDbPerson
 {
     [DynamoDBHashKey]
     public string PersonId { get; init; } = string.Empty;

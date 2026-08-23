@@ -5,7 +5,7 @@ using Ghanavats.DotnetAws.__INFRA_TO_API_NAMESPACE__.DynamoDbModels;
 
 namespace Ghanavats.DotnetAws.__INFRA_TO_FEATURE_NAMESPACE__.Repositories;
 
-public /*__REPOSITORY_ACCESS__*/ sealed class PeopleRepository : IPeopleRepository
+public /*__PUBLIC_TO_INTERNAL_ACCESS__*/ sealed class PeopleRepository : IPeopleRepository
 {
     private readonly IDynamoDBContext _dbContext;
 
