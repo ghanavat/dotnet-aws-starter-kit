@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <PackageId>Ghanavats.DotNetAws.Templates</PackageId>
-    <PackageVersion>1.1.1</PackageVersion>
+    <PackageVersion>1.1.2</PackageVersion>
     <Title>Ghanavats .NET on AWS Starter Kit</Title>
     <Authors>Saeed Ghanavat</Authors>
     <Description>A configurable .NET solution template for building and deploying serverless APIs on AWS.</Description>
