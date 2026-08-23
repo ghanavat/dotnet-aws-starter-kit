@@ -29,7 +29,7 @@ internal static class RegisterServices
         {
             services.AddScoped<IPeopleRepository, PeopleRepository>();
 
-            services.AddSingleton<DynamoDBContext>(sp =>
+            services.AddSingleton<IDynamoDBContext>(sp =>
             {
                 var awsRegion = configuration["AWS:Region"];
                 ArgumentException.ThrowIfNullOrWhiteSpace(awsRegion);
