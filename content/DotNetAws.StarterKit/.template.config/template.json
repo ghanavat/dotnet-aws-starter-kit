@@ -215,7 +215,7 @@
     {
       "condition": "(architecture == 'vertical-slice')",
       "source": "./tests/Ghanavats.DotnetAws.Infrastructure.Tests/RepositoryTests/",
-      "target": "./tests/Ghanavats.DotnetAws.Api.Tests/GetPersonDetailsTests/"
+      "target": "./tests/Ghanavats.DotnetAws.Api.Tests/RepositoryTests/"
     }
   ],
   "postActions": [
