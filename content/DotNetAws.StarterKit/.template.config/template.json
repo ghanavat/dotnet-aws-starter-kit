@@ -24,6 +24,7 @@
   ],
   "symbols": {
     "architecture": {
+      "displayName": "Application Architecture",
       "type": "parameter",
       "datatype": "choice",
       "defaultValue": "clean-arc",
@@ -31,13 +32,22 @@
       "choices": [
         {
           "choice": "clean-arc",
+          "displayName": "Clean Architecture",
           "description": "Multi-project Clean Architecture"
         },
         {
           "choice": "vertical-slice",
+          "displayName": "Vertical Slice Architecture",
           "description": "Single-project Vertical Slice Architecture"
         }
       ]
+    },
+    "addReadme": {
+      "displayName": "Include README.md",
+      "type": "parameter",
+      "datatype": "bool",
+      "defaultValue": true,
+      "description": "Include a README.md file in the generated solution."
     },
     "featureNamespaceSegment": {
       "type": "generated",
@@ -182,8 +192,12 @@
           "condition": "(architecture == 'clean-arc')",
           "exclude": [
             "src/Presentation/Ghanavats.DotnetAws.Api/Features/**/*",
-            "src/Presentation/Ghanavats.DotnetAws.Api/DependencyInjection/**/*"
-          ]
+            "src/Presentation/Ghanavats.DotnetAws.Api/DependencyInjection/**/*",
+            "README.md"
+          ],
+          "rename": {
+            "README.DotnetAwsTemplate.md": "README.md"
+          }
         },
         {
           "condition": "(architecture == 'vertical-slice')",
@@ -196,7 +210,17 @@
             "tests/Ghanavats.DotnetAws.Core.Tests/**/*",
             "tests/Ghanavats.DotnetAws.Infrastructure.Tests/**/*",
             "tests/Ghanavats.DotnetAws.Shared.Tests/**/*",
-            "tests/Ghanavats.DotnetAws.UseCases.Tests/**/*"
+            "tests/Ghanavats.DotnetAws.UseCases.Tests/**/*",
+            "README.md"
+          ],
+          "rename": {
+            "README.DotnetAwsTemplate.md": "README.md"
+          }
+        },
+        {
+          "condition": "(addReadme == false)",
+          "exclude": [
+            "README.DotnetAwsTemplate.md"
           ]
         }
       ]
