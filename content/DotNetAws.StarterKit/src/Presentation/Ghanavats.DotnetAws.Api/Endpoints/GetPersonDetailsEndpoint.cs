@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
+using Ghanavats.DotnetAws.__FEATURE_NAMESPACE__.GetPersonDetails;
 using Ghanavats.DotnetAws.Api.Extensions;
-using Ghanavats.DotnetAws.UseCases.GetPersonDetails;
 using Ghanavats.DotnetAws.__FEATURE_NAMESPACE__.GetPersonDetails.Requests;
 using Ghanavats.DotnetAws.__FEATURE_NAMESPACE__.GetPersonDetails.Responses;
 using Ghanavats.ResultPattern;

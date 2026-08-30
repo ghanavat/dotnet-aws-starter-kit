@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using FluentValidation;
+using Ghanavats.DotnetAws.__FEATURE_NAMESPACE__.GetPersonDetails;
 using Ghanavats.DotnetAws.__FEATURE_NAMESPACE__.GetPersonDetails.Validators;
-using Ghanavats.DotnetAws.UseCases.GetPersonDetails;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Ghanavats.DotnetAws.UseCases.DependencyInjection;

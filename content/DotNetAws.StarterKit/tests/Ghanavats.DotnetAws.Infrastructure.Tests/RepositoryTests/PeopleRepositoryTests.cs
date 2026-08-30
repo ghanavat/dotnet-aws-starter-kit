@@ -38,7 +38,7 @@ public class PeopleRepositoryTests
         var personId = Guid.NewGuid();
         var expectedPerson = new DynamoDbPerson { PersonId = personId.ToString() };
         
-        _dynamoDbContextInterface.Setup(x => x.LoadAsync<DynamoDbPerson>(personId.ToString("D")))!
+        _dynamoDbContextInterface.Setup(x => x.LoadAsync<DynamoDbPerson>(personId.ToString("D")))
             .ReturnsAsync(expectedPerson);
         
         // Act
@@ -46,6 +46,6 @@ public class PeopleRepositoryTests
         
         // Assert
         Assert.NotNull(result);
-        Assert.Equal(expectedPerson.PersonId, result?.Id.ToString());
+        Assert.Equal(expectedPerson.PersonId, result.Id.ToString());
     }
 }

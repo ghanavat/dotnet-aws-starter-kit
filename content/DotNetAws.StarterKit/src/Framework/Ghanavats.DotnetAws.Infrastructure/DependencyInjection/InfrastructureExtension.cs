@@ -2,8 +2,8 @@ using System.Diagnostics.CodeAnalysis;
 using Amazon;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
-using Ghanavats.DotnetAws.__FEATURE_NAMESPACE__.Contracts;
 using Ghanavats.DotnetAws.__INFRA_TO_FEATURE_NAMESPACE__.Repositories;
+using Ghanavats.DotnetAws.__USECASES_CONTRACT_TO_API_FEATURE_NAMESPACE__;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

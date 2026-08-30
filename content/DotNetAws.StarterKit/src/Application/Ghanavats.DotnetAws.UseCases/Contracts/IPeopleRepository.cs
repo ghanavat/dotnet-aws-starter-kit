@@ -1,6 +1,6 @@
 using Ghanavats.DotnetAws.__ENTITIES_NAMESPACE__;
 
-namespace Ghanavats.DotnetAws.__FEATURE_NAMESPACE__.Contracts;
+namespace Ghanavats.DotnetAws.__USECASES_CONTRACT_TO_API_FEATURE_NAMESPACE__;
 
 public interface IPeopleRepository
 {

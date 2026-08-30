@@ -2,7 +2,7 @@ using FluentValidation.TestHelper;
 using Ghanavats.DotnetAws.__FEATURE_NAMESPACE__.GetPersonDetails.Requests;
 using Ghanavats.DotnetAws.__FEATURE_NAMESPACE__.GetPersonDetails.Validators;
 
-namespace Ghanavats.DotnetAws.UseCases.Tests.GetPersonDetailsTests;
+namespace Ghanavats.DotnetAws.__USECASES_TO_API_NAMESPACE__.Tests.GetPersonDetailsTests;
 
 public class GetPersonDetailsRequestValidatorTests
 {

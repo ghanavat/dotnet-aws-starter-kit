@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
-using Ghanavats.DotnetAws.__FEATURE_NAMESPACE__.Contracts;
 using Ghanavats.DotnetAws.__FEATURE_NAMESPACE__.GetPersonDetails.Requests;
 using Ghanavats.DotnetAws.__FEATURE_NAMESPACE__.GetPersonDetails.Responses;
+using Ghanavats.DotnetAws.__USECASES_CONTRACT_TO_API_FEATURE_NAMESPACE__;
 using Ghanavats.ResultPattern;
 using Microsoft.Extensions.Logging;
 
-namespace Ghanavats.DotnetAws.UseCases.GetPersonDetails;
+namespace Ghanavats.DotnetAws.__FEATURE_NAMESPACE__.GetPersonDetails;
 
 public interface IGetPersonDetails
 {

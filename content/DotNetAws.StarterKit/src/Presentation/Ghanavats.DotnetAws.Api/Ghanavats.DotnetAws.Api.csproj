@@ -6,11 +6,14 @@
         <RootNamespace>Ghanavats.DotnetAws.Api</RootNamespace>
     </PropertyGroup>
 
-    <ItemGroup Condition="$(architecture) == 'clean-arc'">
+<!--#if(architecture == 'clean-arc')-->
+    <ItemGroup>
         <ProjectReference Include="..\..\Application\Ghanavats.DotnetAws.UseCases\Ghanavats.DotnetAws.UseCases.csproj"/>
         <ProjectReference Include="..\..\Shared\Ghanavats.DotnetAws.Shared\Ghanavats.DotnetAws.Shared.csproj"/>
         <ProjectReference Include="..\..\Framework\Ghanavats.DotnetAws.Infrastructure\Ghanavats.DotnetAws.Infrastructure.csproj" />
     </ItemGroup>
+<!--#endif-->
+    
 
     <ItemGroup>
         <PackageReference Include="Amazon.Lambda.AspNetCoreServer.Hosting"/>

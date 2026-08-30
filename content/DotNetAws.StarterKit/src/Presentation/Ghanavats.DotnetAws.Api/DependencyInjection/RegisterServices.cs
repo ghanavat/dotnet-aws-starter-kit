@@ -3,10 +3,10 @@ using Amazon;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
 using FluentValidation;
-using Ghanavats.DotnetAws.__FEATURE_NAMESPACE__.Contracts;
+using Ghanavats.DotnetAws.__FEATURE_NAMESPACE__.GetPersonDetails;
 using Ghanavats.DotnetAws.__FEATURE_NAMESPACE__.GetPersonDetails.Validators;
 using Ghanavats.DotnetAws.__INFRA_TO_FEATURE_NAMESPACE__.Repositories;
-using Ghanavats.DotnetAws.UseCases.GetPersonDetails;
+using Ghanavats.DotnetAws.__USECASES_CONTRACT_TO_API_FEATURE_NAMESPACE__;
 
 namespace Ghanavats.DotnetAws.Api.DependencyInjection;
 
