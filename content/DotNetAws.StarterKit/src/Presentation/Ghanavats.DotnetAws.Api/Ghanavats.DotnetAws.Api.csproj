@@ -6,24 +6,23 @@
         <RootNamespace>Ghanavats.DotnetAws.Api</RootNamespace>
     </PropertyGroup>
 
-<!--#if(architecture == 'clean-arc')-->
+    <!--#if(architecture == 'clean-arc')-->
     <ItemGroup>
         <ProjectReference Include="..\..\Application\Ghanavats.DotnetAws.UseCases\Ghanavats.DotnetAws.UseCases.csproj"/>
         <ProjectReference Include="..\..\Shared\Ghanavats.DotnetAws.Shared\Ghanavats.DotnetAws.Shared.csproj"/>
-        <ProjectReference Include="..\..\Framework\Ghanavats.DotnetAws.Infrastructure\Ghanavats.DotnetAws.Infrastructure.csproj" />
+        <ProjectReference Include="..\..\Framework\Ghanavats.DotnetAws.Infrastructure\Ghanavats.DotnetAws.Infrastructure.csproj"/>
     </ItemGroup>
-<!--#endif-->
-    
+    <!--#endif-->
 
     <ItemGroup>
         <PackageReference Include="Amazon.Lambda.AspNetCoreServer.Hosting"/>
         <PackageReference Include="AWSSDK.Extensions.NETCore.Setup"/>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi"/>
     </ItemGroup>
-    
+
     <ItemGroup Condition="$(architecture) == 'vertical-slice'">
         <PackageReference Include="Ghanavats.ResultPattern"/>
-        <PackageReference Include="AWSSDK.DynamoDBv2" />
+        <PackageReference Include="AWSSDK.DynamoDBv2"/>
         <PackageReference Include="FluentValidation.DependencyInjectionExtensions"/>
     </ItemGroup>
 
