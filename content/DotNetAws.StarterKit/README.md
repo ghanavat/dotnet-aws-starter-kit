@@ -1,3 +1,6 @@
+**Interested in the commercial, production-focused edition? 
+Join [Ghanavats .NET on AWS Early Access](https://landing.ghanavats.tech/dotnet-aws-pro)**
+
 # Ghanavats .NET on AWS Starter Kit
 
 A configurable .NET solution template for building and deploying serverless APIs on AWS.

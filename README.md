@@ -7,7 +7,7 @@ A configurable .NET 10 solution template for building and deploying serverless A
 
 This repository is the template authoring and NuGet packaging project. The solution that users receive from dotnet new lives under content/DotNetAws.StarterKit.
 
-This starter kit is actively developed. Clean Architecture is the default generation mode. The Vertical Slice mode should be treated as experimental until both generated outputs are covered by automated build tests.
+This starter kit is actively developed. Clean Architecture is the default generation mode.
 
 # Repository structure
 | Path                                                        | Purpose                                                                           |
