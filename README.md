@@ -5,7 +5,7 @@
 **Interested in the commercial, production-focused edition?
 Join [Ghanavats .NET on AWS Early Access](https://landing.ghanavats.tech/dotnet-aws-pro)**
 
-# .NET AWS Starter Kit
+# .NET on AWS Starter Kit
 A configurable .NET 10 solution template for building and deploying serverless APIs on AWS. It combines an ASP.NET Core Minimal API with AWS Lambda, API Gateway, DynamoDB, and infrastructure defined in C# using AWS CDK.
 
 This repository is the template authoring and NuGet packaging project. The solution that users receive from dotnet new lives under content/DotNetAws.StarterKit.
@@ -74,6 +74,22 @@ dotnet pack
 The package is written to `bin/Release/` Before publishing it, 
 install the generated `.nupkg` in a clean template environment 
 and verify that both architecture choices generate, restore, build, and test successfully.
+
+# What's not included
+
+The following advanced topics are not included in this starter kit. 
+
+**Need these in production?** [Book a 30 mins free call](https://bookings.cloud.microsoft/book/AWSArchitectureConsultancy@ghanavats.tech/?ismsaljsauthenabled=true) with me to discuss your requirements 
+and get a quote for a commercial edition of this starter kit.
+
+* Deep observability and monitoring
+* Cost control and optimisation
+* CI/CD pipelines, 
+* Production-grade security hardening
+* Advanced AWS services like S3, SQS, SNS, or EventBridge
+* Multi-account or multi-region deployment
+* Multi-environment configuration and secrets management
+* Advanced DynamoDB patterns like transactions, streams, or TTL
 
 # Contributing
 When changing the template, update files under `content/DotNetAws.StarterKit/` and test 
