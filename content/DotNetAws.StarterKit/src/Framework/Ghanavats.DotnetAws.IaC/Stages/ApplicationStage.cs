@@ -27,8 +27,5 @@ public sealed class ApplicationStage : Stage
                 StackName = $"application-{settings.Name}-api",
                 TerminationProtection = settings.StackTerminationProtection
             });
-        
-        /*TODO: I don't think I need this.*/
-        //lambdaStack.AddStackDependency(dynamoDbStack);
     }
 }
