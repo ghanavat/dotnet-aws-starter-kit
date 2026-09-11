@@ -261,8 +261,26 @@ This generates the CloudFormation template without deploying anything. Read it t
 
 ### Deploy
 
+The solution is already configured to deploy into a `Dev` environment. 
+You can change that in the CDK context if you want, but the default is fine for getting started.
+
+This is done by using Stages in CDK. 
+The `Dev` stage is defined in `src/Framework/Ghanavats.DotnetAws.IaC/Stages/ApplicationStage.cs` and called in `src/Framework/Ghanavats.DotnetAws.IaC/Program.cs`. 
+
+The stacks are defined in `src/Framework/Ghanavats.DotnetAws.IaC/Stacks`.
+
+Deploy all application stacks:
+
 ```bash
-cdk deploy --all
+cdk deploy 'Dev/*'
+```
+
+Deploy specific stack by name. 
+This is very useful when you have multiple stacks and want to deploy only one of them. 
+For example, if you want to deploy only the API stack (Lambda as per this Starter Kit) and NOT the DynamoDB stack, run:
+
+```bash
+cdk deploy 'Dev/ApiServiceStack'
 ```
 
 CDK shows you the IAM changes and asks for confirmation. Approve it, and the deployment takes a few minutes.
@@ -360,7 +378,7 @@ These run as tests, not as a build step — they catch nothing unless your pipel
 
 ```bash
 cd src/Framework/Ghanavats.DotnetAws.IaC
-cdk destroy --all
+cdk destroy 'Dev/*'
 ```
 
 **Do this when you're done evaluating.** The deployed stack is small and mostly falls inside the AWS Free Tier at zero traffic, but "mostly" is not "certainly",

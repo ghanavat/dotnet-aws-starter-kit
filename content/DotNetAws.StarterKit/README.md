@@ -421,21 +421,15 @@ You should understand which AWS account and Region are active before deploying r
 
 ### Open the CDK project
 
-Open the `AwsEnvironmentCreator` class in the CDK project to edit the environment configuration. The class is located in the `src/Framework/Ghanavats.DotnetAws.IaC` project.
+Open the `Program.cs` class in the CDK project to edit the environment configuration. The class is located in the `src/Framework/Ghanavats.DotnetAws.IaC` project.
 You must configure the `account` and `region` values to match your AWS account and preferred Region:
 
 ```csharp
-public static class AwsEnvironmentCreator
-{
-    public static Environment SetEnvironment()
-    {
-        return new Environment
-        {
-            Account = "YourAWSAccountId",
-            Region = RegionEndpoint.EUWest1.SystemName
-        };
-    }
-}
+_ = new ApplicationStage(app, "Dev", new Environment
+            {
+                Account = "1234567890",
+                Region = RegionEndpoint.EUWest1.SystemName
+            }
 ```
 
 From the generated solution directory:
@@ -469,7 +463,14 @@ Bootstrapping is normally required only once for each AWS account and Region. Bo
 Deploy all application stacks:
 
 ```bash
-cdk deploy --all
+cdk deploy 'Dev/*'
+```
+
+Deploy specific stacks by name:
+
+```bash
+cdk deploy 'Dev/ApiServiceStack'
+cdk deploy 'Dev/DynamoDbStack'
 ```
 
 Review the proposed infrastructure changes before approving the deployment.
@@ -481,7 +482,7 @@ The deployment provisions the application’s Lambda function, API Gateway confi
 Remove the application infrastructure:
 
 ```bash
-cdk destroy --all
+cdk destroy 'Dev/*'
 ```
 
 Review the resources selected for deletion before confirming.
