@@ -19,7 +19,8 @@ internal static class Program
             new EnvironmentSettings
             {
                 IsProduction = false,
-                Name = "dev"
+                Name = "dev",
+                LambdaMemorySize = 2048
             });
         
         app.Synth();

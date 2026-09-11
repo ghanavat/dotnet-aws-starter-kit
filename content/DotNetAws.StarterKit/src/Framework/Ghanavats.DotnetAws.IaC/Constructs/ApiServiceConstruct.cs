@@ -20,7 +20,7 @@ public sealed class ApiServiceConstruct : Construct
         LambdaFunction = new Function(this, "Ghanavats.DotnetAws_Function", new FunctionProps
         {
             Runtime = Runtime.DOTNET_10,
-            MemorySize = 2048,
+            MemorySize = props.Settings.LambdaMemorySize,
             Handler = "Ghanavats.DotnetAws.Api",
             SnapStart = SnapStartConf.ON_PUBLISHED_VERSIONS,
             Environment = new Dictionary<string, string>
@@ -30,7 +30,6 @@ public sealed class ApiServiceConstruct : Construct
             },
             LogGroup = new LogGroup(this, "Ghanavats.DotnetAws_LogGroup", new LogGroupProps
             {
-                //LogGroupName = $"/aws/lambda/Ghanavats.DotnetAws_Function",
                 Retention = RetentionDays.ONE_WEEK,
                 RemovalPolicy = RemovalPolicy.DESTROY
             }),
@@ -98,13 +97,11 @@ public sealed class ApiServiceConstruct : Construct
             {
                 ApiKeyRequired = true,
                 // AuthorizationType = AuthorizationType.COGNITO, // COMING SOON
-                //OperationName = ""
             },
             DeployOptions = new StageOptions
             {
                 StageName = "dev",
                 Description = "Development stage",
-                //LoggingLevel = MethodLoggingLevel.INFO,
                 DataTraceEnabled = true,
                 MetricsEnabled = true
             }
