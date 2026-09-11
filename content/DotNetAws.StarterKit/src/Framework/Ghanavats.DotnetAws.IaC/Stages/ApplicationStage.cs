@@ -15,7 +15,7 @@ public sealed class ApplicationStage : Stage
             Env = environment
         })
     {
-        var dynamoDbStack = new Stacks.DynamoDbStack(this, "DynamoDbStack", settings, new StackProps
+        var dynamoDbStack = new DynamoDbStack(this, "DynamoDbStack", settings, new StackProps
         {
             StackName = $"application-{settings.Name}-dynamodb",
             TerminationProtection = settings.StackTerminationProtection
