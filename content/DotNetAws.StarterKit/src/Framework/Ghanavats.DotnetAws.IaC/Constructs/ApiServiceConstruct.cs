@@ -5,19 +5,23 @@ using Amazon.CDK.AWS.Lambda;
 using Amazon.CDK.AWS.Logs;
 using Constructs;
 using Ghanavats.DotnetAws.IaC.Props;
+using AssetOptions = Amazon.CDK.AWS.S3.Assets.AssetOptions;
+using LogGroupProps = Amazon.CDK.AWS.Logs.LogGroupProps;
+using Runtime = Amazon.CDK.AWS.Lambda.Runtime;
 
 namespace Ghanavats.DotnetAws.IaC.Constructs;
 
 public sealed class ApiServiceConstruct : Construct
 {
     private Function LambdaFunction { get; }
+    public string ApiId { get; private set; } = string.Empty;
 
     public ApiServiceConstruct(Construct scope, string id, ServiceStackProps props)
         : base(scope, id)
     {
-        const string apiProjectPath = "src/Presentation/Ghanavats.DotnetAws.Api";
+        const string lambdaProjectPath = "src/Presentation/Ghanavats.DotnetAws.Api";
 
-        LambdaFunction = new Function(this, "Ghanavats.DotnetAws_Function", new FunctionProps
+        LambdaFunction = new Function(this, id, new FunctionProps
         {
             Runtime = Runtime.DOTNET_10,
             MemorySize = props.Settings.LambdaMemorySize,
@@ -33,7 +37,7 @@ public sealed class ApiServiceConstruct : Construct
                 Retention = RetentionDays.ONE_WEEK,
                 RemovalPolicy = RemovalPolicy.DESTROY
             }),
-            Code = Code.FromAsset("../../../", new Amazon.CDK.AWS.S3.Assets.AssetOptions
+            Code = Code.FromAsset("../../../", new AssetOptions
             {
                 Bundling = new BundlingOptions
                 {
@@ -51,8 +55,8 @@ public sealed class ApiServiceConstruct : Construct
                         " && export PATH=\"$PATH:/root/.dotnet/tools\"" +
                         " && export DOTNET_CLI_HOME=/tmp" +
                         " && export NUGET_PACKAGES=/tmp/nuget" +
-                        $" && dotnet restore {apiProjectPath}/Ghanavats.DotnetAws.Api.csproj" +
-                        $" && dotnet lambda package --project-location {apiProjectPath} --configuration Release --output-package /asset-output/ghanavats.dotnetaws_function.zip"
+                        $" && dotnet restore {lambdaProjectPath}/Ghanavats.DotnetAws.Api.csproj" +
+                        $" && dotnet lambda package --project-location {lambdaProjectPath} --configuration Release --output-package /asset-output/ghanavats.dotnetaws_function.zip"
                     ]
                 }
             })
@@ -74,12 +78,12 @@ public sealed class ApiServiceConstruct : Construct
             DeploymentConfig = LambdaDeploymentConfig.ALL_AT_ONCE
         });
 
-        CreateRestApi(this, "ApiServiceStack", LambdaFunction);
+        CreateRestApi(this, "ApiServiceStack", props.Settings.Name, LambdaFunction);
     }
 
-    private static void CreateRestApi(Construct scope, string id, IFunction lambdaFunction)
+    private void CreateRestApi(Construct scope, string id, string environmentName, IFunction lambdaFunction)
     {
-        var api = new LambdaRestApi(scope, id, new LambdaRestApiProps
+        var restApiProps = new LambdaRestApiProps
         {
             Handler = lambdaFunction,
             Proxy = true,
@@ -95,18 +99,20 @@ public sealed class ApiServiceConstruct : Construct
             },
             DefaultMethodOptions = new MethodOptions
             {
-                ApiKeyRequired = true,
-                // AuthorizationType = AuthorizationType.COGNITO, // COMING SOON
+                AuthorizationType = AuthorizationType.IAM
             },
             DeployOptions = new StageOptions
             {
-                StageName = "dev",
+                StageName = environmentName,
                 Description = "Development stage",
                 DataTraceEnabled = true,
                 MetricsEnabled = true
             }
-        });
+        };
 
+        var api = new LambdaRestApi(scope, id, restApiProps);
+        ApiId = api.RestApiId;
+        
         var usagePlan = api.AddUsagePlan("usagePlan", new UsagePlanProps
         {
             Name = "Ghanavats.DotnetAws.Api_UsagePlan",
@@ -129,7 +135,6 @@ public sealed class ApiServiceConstruct : Construct
         var apiKey = api.AddApiKey("ApiKey", new ApiKeyProps
         {
             ApiKeyName = "application_apikey"
-            /*Value: Not setting a value for the Value property will create the API Key with auto generated value. Ideal.*/
         });
 
         usagePlan.AddApiKey(apiKey);

@@ -14,7 +14,7 @@ public class DynamoDbStack : Stack
         IStackProps? props = null)
         : base(scope, id, props)
     {
-        PeopleTable = new TableV2(this, "people_table", new TablePropsV2
+        PeopleTable = new TableV2(this, id, new TablePropsV2
         {
             TableName = "People",
             PartitionKey = new Attribute

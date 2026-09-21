@@ -8,16 +8,19 @@ namespace Ghanavats.DotnetAws.IaC.Stacks;
 
 internal class ApiServiceStack : Stack
 {
+    public string ApiId { get;}
+    
     internal ApiServiceStack(Construct scope, string id,
         EnvironmentSettings settings,
         ITableV2 table,
         IStackProps? props = null)
         : base(scope, id, props)
     {
-        _ = new ApiServiceConstruct(this, id, new ServiceStackProps
+        var apiServiceConstruct = new ApiServiceConstruct(this, id, new ServiceStackProps
         {
             Settings = settings,
             Table = table
         });
+        ApiId = apiServiceConstruct.ApiId;
     }
 }

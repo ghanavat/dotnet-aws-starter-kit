@@ -17,11 +17,6 @@
   },
   "sourceName": "Ghanavats.DotnetAws",
   "preferNameDirectory": true,
-  "primaryOutputs": [
-    {
-      "path": "Ghanavats.DotnetAws.sln"
-    }
-  ],
   "SpecialCustomOperations": {
     "*.md": {
       "Operations": [
@@ -70,6 +65,14 @@
       "datatype": "bool",
       "defaultValue": true,
       "description": "Include a README.md file in the generated solution."
+    },
+    "add-iam-auth": {
+      "isEnabled": false,
+      "displayName": "Include IAM Permissions",
+      "type": "parameter",
+      "datatype": "bool",
+      "defaultValue": true,
+      "description": "Include IAM permissions in the generated solution to control access to the API."
     },
     "featureNamespaceSegment": {
       "type": "generated",
