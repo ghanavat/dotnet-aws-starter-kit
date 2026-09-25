@@ -13,7 +13,8 @@
   "shortName": "ghanavats_dotnet_aws_starter",
   "tags": {
     "language": "C#",
-    "type": "solution"
+    "type": "solution",
+    "editorTreatAs": "solution"
   },
   "sourceName": "Ghanavats.DotnetAws",
   "preferNameDirectory": true,
@@ -23,14 +24,31 @@
         {
           "type": "conditional",
           "configuration": {
-            "if": [ "<!--#if" ],
-            "else": [ "<!--#else" ],
-            "elseif": [ "<!--#elseif" ],
-            "endif": [ "<!--#endif" ],
-            "actionableIf": [ "<!----#if" ],
-            "actionableElse": [ "<!----#else" ],
-            "actionableElseif": [ "<!----#elseif" ],
-            "actions": [ "cStyleUncomment", "cStyleReduceComment" ],
+            "if": [
+              "<!--#if"
+            ],
+            "else": [
+              "<!--#else"
+            ],
+            "elseif": [
+              "<!--#elseif"
+            ],
+            "endif": [
+              "<!--#endif"
+            ],
+            "actionableIf": [
+              "<!----#if"
+            ],
+            "actionableElse": [
+              "<!----#else"
+            ],
+            "actionableElseif": [
+              "<!----#elseif"
+            ],
+            "actions": [
+              "cStyleUncomment",
+              "cStyleReduceComment"
+            ],
             "trim": true,
             "wholeLine": true,
             "evaluator": "C++"
@@ -306,7 +324,52 @@
   ],
   "primaryOutputs": [
     {
-      "path": "Ghanavats.DotnetAws.sln"
+      "path": "./Ghanavats.DotnetAws.sln"
+    },
+    {
+      "path": "./src/Presentation/Ghanavats.DotnetAws.Api.csproj"
+    },
+    {
+      "path": "./src/Application/Ghanavats.DotnetAws.UseCases.csproj",
+      "condition": "(architecture == clean-arc)"
+    },
+    {
+      "path": "./src/Core/Ghanavats.DotnetAws.Core.csproj",
+      "condition": "(architecture == clean-arc)"
+    },
+    {
+      "path": "./src/Framework/Ghanavats.DotnetAws.IaC.csproj"
+    },
+    {
+      "path": "./src/Framework/Ghanavats.DotnetAws.Infrastructure.csproj",
+      "condition": "(architecture == clean-arc)"
+    },
+    {
+      "path": "./src/Shared/Ghanavats.DotnetAws.Shared.csproj",
+      "condition": "(architecture == clean-arc)"
+    },
+    {
+      "path": "./tests/Ghanavats.DotnetAws.Api.Tests.csproj"
+    },
+    {
+      "path": "./tests/Ghanavats.DotnetAws.UseCases.Tests.csproj",
+      "condition": "(architecture == clean-arc)"
+    },
+    {
+      "path": "./tests/Ghanavats.DotnetAws.Core.Tests.csproj",
+      "condition": "(architecture == clean-arc)"
+    },
+    {
+      "path": "./tests/Ghanavats.DotnetAws.Architecture.csproj",
+      "condition": "(architecture == clean-arc)"
+    },
+    {
+      "path": "./tests/Ghanavats.DotnetAws.Shared.csproj",
+      "condition": "(architecture == clean-arc)"
+    },
+    {
+      "path": "./tests/Ghanavats.DotnetAws.Infrastructure.csproj",
+      "condition": "(architecture == clean-arc)"
     }
   ],
   "postActions": [
@@ -319,10 +382,7 @@
         {
           "text": "Run 'dotnet restore'"
         }
-      ],
-      "args": {
-        "files": ["Ghanavats.DotnetAws.sln"]
-      }
+      ]
     }
   ]
 }
