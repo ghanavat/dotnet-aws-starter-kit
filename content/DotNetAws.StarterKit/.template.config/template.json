@@ -66,14 +66,6 @@
       "defaultValue": true,
       "description": "Include a README.md file in the generated solution."
     },
-    "add-iam-auth": {
-      "isEnabled": false,
-      "displayName": "Include IAM Permissions",
-      "type": "parameter",
-      "datatype": "bool",
-      "defaultValue": true,
-      "description": "Include IAM permissions in the generated solution to control access to the API."
-    },
     "featureNamespaceSegment": {
       "type": "generated",
       "generator": "switch",
@@ -305,17 +297,25 @@
       "target": "./tests/Ghanavats.DotnetAws.Api.Tests/RepositoryTests/"
     }
   ],
+  "primaryOutputs": [
+    {
+      "path": "Ghanavats.DotnetAws.sln"
+    }
+  ],
   "postActions": [
     {
       "actionId": "210D431B-A78B-4D2F-B762-4ED3E3EA9025",
       "description": "Restore NuGet packages required by this project.",
-      "condition": "(!skipRestore)",
-      "continueOnError": false,
+      //"condition": "(!skipRestore)",
+      "continueOnError": true,
       "manualInstructions": [
         {
           "text": "Run 'dotnet restore'"
         }
-      ]
+      ],
+      "args": {
+        "files": ["../Ghanavats.DotnetAws.sln"]
+      }
     }
   ]
 }
