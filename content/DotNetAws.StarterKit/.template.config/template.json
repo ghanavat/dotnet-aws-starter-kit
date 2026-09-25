@@ -66,6 +66,13 @@
       "defaultValue": true,
       "description": "Include a README.md file in the generated solution."
     },
+    "skip-restore": {
+      "displayName": "Skip Restore",
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "If specified, skips the automatic restore of the project on create.",
+      "defaultValue": false
+    },
     "featureNamespaceSegment": {
       "type": "generated",
       "generator": "switch",
@@ -306,7 +313,7 @@
     {
       "actionId": "210D431B-A78B-4D2F-B762-4ED3E3EA9025",
       "description": "Restore NuGet packages required by this project.",
-      //"condition": "(!skipRestore)",
+      "condition": "(!skip-restore)",
       "continueOnError": true,
       "manualInstructions": [
         {
@@ -314,7 +321,7 @@
         }
       ],
       "args": {
-        "files": ["../Ghanavats.DotnetAws.sln"]
+        "files": ["Ghanavats.DotnetAws.sln"]
       }
     }
   ]
