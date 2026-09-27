@@ -84,7 +84,7 @@ and get a quote for a commercial edition of this starter kit.
 
 * Deep observability and monitoring
 * Cost control and optimisation
-* CI/CD pipelines, 
+* CI/CD pipelines
 * Production-grade security hardening
 * Advanced AWS services like S3, SQS, SNS, or EventBridge
 * Multi-account or multi-region deployment

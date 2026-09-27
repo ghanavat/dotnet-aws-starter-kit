@@ -8,4 +8,5 @@ public class IdentityStackProps : IStackProps
     public string Stage { get; init; } = string.Empty;
     public string? AccountId { get; init; } = string.Empty;
     public string? Region { get; init; } = string.Empty;
+    public string TrustedClientPrincipalArn { get; init; } = string.Empty;
 }

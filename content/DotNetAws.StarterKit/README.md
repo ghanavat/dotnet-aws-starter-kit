@@ -185,6 +185,7 @@ The application is deployed as a serverless API using AWS Lambda and API Gateway
 - Amazon DynamoDB persistence
 - AWS CDK Infrastructure as Code
 - API key and usage plan configuration
+- IAM authorization with AWS Signature Version 4
 - OpenAPI documentation
 - FluentValidation
 - Ghanavats Result Pattern
@@ -239,7 +240,7 @@ The API project is the Lambda entry point and is deployed using AWS CDK. During 
 
 Deployment assets are uploaded to the CDK bootstrap bucket. These assets are managed through the CDK bootstrap resources and are not part of the application stacks themselves.
 
-## Lambda cold-start mitigation
+### Lambda cold-start mitigation
 
 AWS Lambda may create a new execution environment when a function is invoked for the first time or when additional instances are required to handle increased traffic. Starting the .NET runtime, building the ASP.NET Core application, configuring dependency injection and loading application code can add latency to these cold invocations.
 
@@ -362,6 +363,83 @@ The following topics are currently outside the starter kit’s scope:
 
 These concerns should be designed according to the access patterns and operational requirements of the application being built.
 
+## IAM authorization with AWS Signature Version 4
+
+The starter kit uses AWS Identity and Access Management (IAM) authorization to protect its API Gateway endpoints. This option is intended primarily for trusted machine-to-machine clients and AWS workloads operating within the same AWS account.
+
+During deployment, the Infrastructure as Code project creates an assumable IAM role with a least-privilege permissions policy. The supplied example policy grants `execute-api:Invoke` access only to the configured API, deployment stage, HTTP method, and resource path.
+
+For example, the default policy allows access to:
+
+```text
+GET /api/{personId}
+```
+
+Access to other methods or routes must be added explicitly to the role’s permissions policy.
+
+### How access works
+
+An approved AWS principal first assumes the API invocation role using AWS Security Token Service (STS). STS returns temporary credentials consisting of:
+
+- An access key ID
+- A secret access key
+- A session token
+
+The client uses these temporary credentials to sign its request using AWS Signature Version 4 (SigV4). The request must also include the API key issued for the API Gateway usage plan:
+
+```http
+x-api-key: <api-key>
+```
+
+API Gateway forwards the request to the Lambda function only when both requirements are satisfied:
+
+1. The request contains a valid API key for the configured usage plan.
+2. The SigV4 signature identifies an IAM principal that is allowed to perform `execute-api:Invoke` on the requested method and resource.
+
+The API key is used for client identification, throttling, and usage-plan management. It is not used as the primary authentication or authorization mechanism. IAM authorization provides the access control decision.
+
+### Assuming the role
+
+The calling identity must be trusted by the role and permitted to call `sts:AssumeRole` for that specific role ARN.
+
+Temporary credentials can be requested with the AWS CLI:
+
+```bash
+aws sts assume-role \
+  --role-arn <api-invocation-role-arn> \
+  --role-session-name dotnet-aws-api-client
+```
+
+Applications should normally use an AWS SDK or another supported AWS credential provider to assume the role and refresh the temporary credentials automatically.
+
+### Calling the API
+
+Clients should use an AWS SDK, a SigV4-capable HTTP client, or a trusted signing library rather than constructing the signature manually.
+
+For example, a version of `curl` with SigV4 support can make a signed request using temporary credentials:
+
+```bash
+curl \
+  --aws-sigv4 "aws:amz:<aws-region>:execute-api" \
+  --user "$AWS_ACCESS_KEY_ID:$AWS_SECRET_ACCESS_KEY" \
+  --header "x-amz-security-token: $AWS_SESSION_TOKEN" \
+  --header "x-api-key: $API_KEY" \
+  "https://<api-id>.execute-api.<aws-region>.amazonaws.com/<stage>/api/<person-id>"
+```
+
+The region, API ID, stage, role ARN, and API key are environment-specific and should be obtained from the deployed AWS resources.
+
+### Security considerations
+
+- Use temporary role credentials instead of creating long-lived IAM access keys.
+- Restrict the role’s trust policy to the specific IAM principals that need to call the API.
+- Grant `execute-api:Invoke` only for the required stages, methods, and resource paths.
+- Do not treat an API key as an authentication credential. AWS recommends using IAM, a Lambda authorizer, or Amazon Cognito to control API access.
+- Store and distribute API keys securely even though they are not the primary authentication mechanism.
+- Update the IAM policy whenever new protected endpoints are introduced.
+- Use separate roles and policies when different clients require different levels of access.
+- Consider IAM Access Analyzer and AWS CloudTrail for reviewing role trust and monitoring role-assumption activity.
+
 ## Infrastructure as Code
 
 Infrastructure is defined using AWS CDK and C#.
@@ -422,14 +500,14 @@ You should understand which AWS account and Region are active before deploying r
 ### Open the CDK project
 
 Open the `Program.cs` class in the CDK project to edit the environment configuration. The class is located in the `src/Framework/Ghanavats.DotnetAws.IaC` project.
-You must configure the `account` and `region` values to match your AWS account and preferred Region:
+The `account` and `region` are provided by the AWS profile. You must configure the `account` and `region` in the profile to match your AWS account and preferred Region:
 
 ```csharp
 _ = new ApplicationStage(app, "Dev", new Environment
-            {
-                Account = "1234567890",
-                Region = RegionEndpoint.EUWest1.SystemName
-            }
+    {
+        Account = Aws.ACCOUNT_ID,
+        Region = Aws.REGION
+    }
 ```
 
 From the generated solution directory:
@@ -463,7 +541,20 @@ Bootstrapping is normally required only once for each AWS account and Region. Bo
 Deploy all application stacks:
 
 ```bash
-cdk deploy 'Dev/*'
+cdk deploy 'Dev/*' --parameters "<IdentityStackName>:TrustedClientPrincipalArn:<TrustedArn>"
+```
+
+You can obtain your ARN via this command, and replace the TrustedArn with the value under Arn returned from the command:
+
+```bash
+aws sts get-caller-identity
+```
+
+If unsure about the stack name in which the parameter is defined, run the following command to find out.
+Look for the stack ID and use the value shown in the parenthesis:
+
+```bash
+cdk list
 ```
 
 Deploy specific stacks by name:
@@ -493,6 +584,8 @@ Some retained data or CDK bootstrap resources may remain after the application s
 
 ## API key access
 
+> API key is NOT used to authentication or authorization to control access to your APIs.
+
 The starter kit configures an API key and usage plan in Amazon API Gateway.
 
 API Gateway validates the API key before forwarding an accepted request to Lambda. The ASP.NET Core application does not validate or manage API Gateway keys itself.
@@ -505,8 +598,6 @@ x-api-key: your-api-key
 
 API keys and usage plans can provide basic client identification, quotas and throttling. They are not a replacement for user authentication or application authorisation.
 
-For applications requiring user identity, tokens, roles or permissions, integrate a suitable identity provider such as Amazon Cognito or another standards-based provider.
-
 ## Current scope
 
 ### Implemented
@@ -517,6 +608,7 @@ For applications requiring user identity, tokens, roles or permissions, integrat
 - AWS Lambda deployment
 - API Gateway integration
 - DynamoDB integration
+- IAM authorization with AWS Signature Version 4
 - AWS CDK infrastructure
 - OpenAPI documentation
 - FluentValidation
@@ -528,14 +620,8 @@ For applications requiring user identity, tokens, roles or permissions, integrat
 
 ### Planned and under consideration
 
-- CI/CD pipeline examples
-- Authentication and authorisation
-- Additional Vertical Slice examples
-- Advanced DynamoDB access patterns
-- Event-driven architecture examples
-- Additional AWS service integrations
-- Expanded observability guidance
-- Automated template-generation verification
+- ~~Authentication and authorisation~~
+- ~~Additional Vertical Slice examples~~
 
 ## Disclaimer
 

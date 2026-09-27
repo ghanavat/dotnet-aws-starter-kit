@@ -272,7 +272,7 @@ The stacks are defined in `src/Framework/Ghanavats.DotnetAws.IaC/Stacks`.
 Deploy all application stacks:
 
 ```bash
-cdk deploy 'Dev/*'
+cdk deploy 'Dev/*' --parameters "<IdentityStackName>:TrustedClientPrincipalArn:<TrustedArn>"
 ```
 
 Deploy specific stack by name. 
@@ -299,6 +299,7 @@ curl <YOUR_API_URL>/[route]
 | Lambda version + alias | Required for SnapStart — see below |
 | API Gateway | HTTP front door |
 | DynamoDB table | Persistence |
+| IAM role | Lambda execution permissions |
 | IAM role | Lambda execution permissions |
 | CloudWatch log group | Function logs |
 

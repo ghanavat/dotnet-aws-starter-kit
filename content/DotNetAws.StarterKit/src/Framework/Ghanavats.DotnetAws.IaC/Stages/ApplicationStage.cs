@@ -1,5 +1,6 @@
 using Amazon.CDK;
 using Constructs;
+using Ghanavats.DotnetAws.IaC.Props;
 using Ghanavats.DotnetAws.IaC.Stacks;
 using Environment = Amazon.CDK.Environment;
 
@@ -16,16 +17,24 @@ public sealed class ApplicationStage : Stage
             Env = environment
         })
     {
-        var dynamoDbStack = new DynamoDbStack(this, "Ghanavats.DotnetAws_DynamoDbStack", settings, new StackProps
+        var dynamoDbStack = new DynamoDbStack(this, "ApplicationDynamoDbStack", settings, new StackProps
         {
             StackName = $"application-{settings.Name}-dynamodb",
             TerminationProtection = settings.StackTerminationProtection
         });
         
-        _ = new ApiServiceStack(this, "Ghanavats.DotnetAws_ServiceStack", settings, dynamoDbStack.PeopleTable, props: new StackProps
+        var apiServiceStack = new ApiServiceStack(this, "ApplicationServiceStack", settings, dynamoDbStack.PeopleTable, props: new StackProps
         {
             StackName = $"application-{settings.Name}-api",
             TerminationProtection = settings.StackTerminationProtection
+        });
+
+        _ = new IdentityStack(this, "ApplicationIAMStack", new IdentityStackProps
+        {
+            ApiId = apiServiceStack.ApiId,
+            Stage = settings.Name,
+            AccountId = environment.Account,
+            Region = environment.Region
         });
     }
 }

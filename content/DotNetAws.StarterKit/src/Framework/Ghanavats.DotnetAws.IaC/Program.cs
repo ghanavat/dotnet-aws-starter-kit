@@ -1,5 +1,4 @@
-﻿using Amazon;
-using Amazon.CDK;
+﻿using Amazon.CDK;
 using Ghanavats.DotnetAws.IaC.Stages;
 using Environment = Amazon.CDK.Environment;
 
@@ -13,8 +12,8 @@ internal static class Program
         
         _ = new ApplicationStage(app, "Dev", new Environment
             {
-                Account = "1234567890",
-                Region = RegionEndpoint.EUWest1.SystemName
+                Account = Aws.ACCOUNT_ID,
+                Region = Aws.REGION
             },
             new EnvironmentSettings
             {

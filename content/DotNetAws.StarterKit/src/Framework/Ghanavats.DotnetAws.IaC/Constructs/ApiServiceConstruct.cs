@@ -21,7 +21,7 @@ public sealed class ApiServiceConstruct : Construct
     {
         const string lambdaProjectPath = "src/Presentation/Ghanavats.DotnetAws.Api";
 
-        LambdaFunction = new Function(this, id, new FunctionProps
+        LambdaFunction = new Function(this, $"{id}_LambdaFunction", new FunctionProps
         {
             Runtime = Runtime.DOTNET_10,
             MemorySize = props.Settings.LambdaMemorySize,
@@ -32,7 +32,7 @@ public sealed class ApiServiceConstruct : Construct
                 { "PEOPLE_TABLE_NAME", props.Table.TableName },
                 { "ASPNETCORE_ENVIRONMENT", props.Settings.Name }
             },
-            LogGroup = new LogGroup(this, "Ghanavats.DotnetAws_LogGroup", new LogGroupProps
+            LogGroup = new LogGroup(this, $"{id}_LambdaLogGroup", new LogGroupProps
             {
                 Retention = RetentionDays.ONE_WEEK,
                 RemovalPolicy = RemovalPolicy.DESTROY
@@ -65,20 +65,20 @@ public sealed class ApiServiceConstruct : Construct
         props.Table.GrantReadWriteData(LambdaFunction);
 
         // used to make sure each CDK synthesis produces a different Version
-        var alias = new Alias(this, "LambdaAlias", new AliasProps
+        var alias = new Alias(this, $"{id}_LambdaAlias", new AliasProps
         {
             AliasName = "Dev",
             Version = LambdaFunction.CurrentVersion,
             Description = "Development alias for Lambda function"
         });
 
-        _ = new LambdaDeploymentGroup(this, "DeploymentGroup", new LambdaDeploymentGroupProps
+        _ = new LambdaDeploymentGroup(this, $"{id}_LambdaDeploymentGroup", new LambdaDeploymentGroupProps
         {
             Alias = alias,
             DeploymentConfig = LambdaDeploymentConfig.ALL_AT_ONCE
         });
 
-        CreateRestApi(this, "ApiServiceStack", props.Settings.Name, LambdaFunction);
+        CreateRestApi(this, id, props.Settings.Name, LambdaFunction);
     }
 
     private void CreateRestApi(Construct scope, string id, string environmentName, IFunction lambdaFunction)
@@ -99,7 +99,8 @@ public sealed class ApiServiceConstruct : Construct
             },
             DefaultMethodOptions = new MethodOptions
             {
-                AuthorizationType = AuthorizationType.IAM
+                AuthorizationType = AuthorizationType.IAM,
+                ApiKeyRequired = true
             },
             DeployOptions = new StageOptions
             {
@@ -110,10 +111,10 @@ public sealed class ApiServiceConstruct : Construct
             }
         };
 
-        var api = new LambdaRestApi(scope, id, restApiProps);
+        var api = new LambdaRestApi(scope, $"{id}_ApiGateway", restApiProps);
         ApiId = api.RestApiId;
         
-        var usagePlan = api.AddUsagePlan("usagePlan", new UsagePlanProps
+        var usagePlan = api.AddUsagePlan($"{id}_ApiGatewayUsagePlan", new UsagePlanProps
         {
             Name = "Ghanavats.DotnetAws.Api_UsagePlan",
             Description = "Usage Plan for the API",
@@ -132,7 +133,7 @@ public sealed class ApiServiceConstruct : Construct
             ]
         });
 
-        var apiKey = api.AddApiKey("ApiKey", new ApiKeyProps
+        var apiKey = api.AddApiKey($"{id}_ApiGatewayApiKey", new ApiKeyProps
         {
             ApiKeyName = "application_apikey"
         });
