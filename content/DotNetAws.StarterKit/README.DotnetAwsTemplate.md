@@ -375,6 +375,223 @@ These run as tests, not as a build step — they catch nothing unless your pipel
 <!--#endif-->
 ---
 
+## Calling the API with IAM authorization
+
+The generated API uses two complementary access controls:
+
+- **AWS IAM authorization** validates the caller’s AWS identity and checks whether it has permission to invoke the requested API Gateway route.
+- **An API key** identifies the API client and applies the configured usage-plan throttling and quotas.
+
+A successful request must be signed with AWS Signature Version 4 (SigV4) and include a valid `x-api-key` header.
+
+### 1. Select the trusted AWS principal
+
+Before deployment, identify the IAM user or role that will be permitted to assume the generated API invocation role:
+
+```bash
+aws sts get-caller-identity
+```
+
+An IAM user ARN can be used directly:
+
+```text
+arn:aws:iam::123456789012:user/username
+```
+
+If the command returns an STS session ARN:
+
+```text
+arn:aws:sts::123456789012:assumed-role/MyDeveloperRole/session-name
+```
+
+use the underlying IAM role ARN instead:
+
+```text
+arn:aws:iam::123456789012:role/MyDeveloperRole
+```
+
+Do not use an AWS account root ARN or the temporary `assumed-role` session ARN.
+
+### 2. Deploy the application
+
+The IAM stack requires the trusted principal ARN as a CloudFormation parameter.
+
+First, list the CDK stacks:
+
+```bash
+cdk list
+```
+
+A development Stage might contain stacks similar to:
+
+```text
+Dev/ApiStack (Dev-ApiStack)
+Dev/DatabaseStack (Dev-DatabaseStack)
+Dev/IAMStack (Dev-IAMStack)
+```
+
+Deploy the Stage and pass the parameter specifically to the deployed IAM stack:
+
+```bash
+cdk deploy 'Dev/*' \
+  --parameters 'Dev-IAMStack:TrustedClientPrincipalArn=arn:aws:iam::123456789012:role/MyDeveloperRole'
+```
+
+For an IAM user:
+
+```bash
+cdk deploy 'Dev/*' \
+  --parameters 'Dev-IAMStack:TrustedClientPrincipalArn=arn:aws:iam::123456789012:user/username'
+```
+
+Replace `Dev-IAMStack` with the deployed stack name shown in parentheses by `cdk list`.
+
+### 3. Assume the API invocation role
+
+The IAM stack creates the following dedicated role:
+
+```text
+ApplicationIAMStack_IAM_Role
+```
+
+The trusted principal assumes this role before calling the API via AWS CLI:
+
+```bash
+aws sts assume-role \
+  --role-arn arn:aws:iam::123456789012:role/ApplicationIAMStack_IAM_Role \
+  --role-session-name dotnet-aws-api-client
+```
+
+AWS STS returns temporary credentials:
+
+- `AccessKeyId`
+- `SecretAccessKey`
+- `SessionToken`
+- `Expiration`
+
+Do not store these credentials in source control. They expire and must be refreshed when necessary.
+
+A named AWS CLI profile can manage role assumption and credential refreshing automatically. Add a profile to the AWS configuration file:
+
+```ini
+[profile dotnet-aws-api]
+role_arn = arn:aws:iam::123456789012:role/ApplicationIAMStack_IAM_Role
+source_profile = default
+role_session_name = dotnet-aws-api-client
+region = eu-west-1
+```
+
+Replace `default` with the profile representing the trusted IAM principal when necessary.
+
+Verify the assumed identity:
+
+```bash
+aws sts get-caller-identity --profile dotnet-aws-api
+```
+
+The returned ARN should contain:
+
+```text
+assumed-role/ApplicationIAMStack_IAM_Role/
+```
+
+If you want to assume role in .NET, you can do something like this:
+
+```csharp
+var chain = new CredentialProfileStoreChain();
+
+if (!chain.TryGetAWSCredentials( 
+        "default",
+        out var sourceCredentials))
+{
+    throw new InvalidOperationException(
+        "The default AWS profile could not be loaded.");
+}
+        
+using var stsClient = new AmazonSecurityTokenServiceClient(
+    sourceCredentials,
+    RegionEndpoint.EUWest1);
+
+var response = await stsClient.AssumeRoleAsync(
+    new AssumeRoleRequest
+    {
+        RoleArn =
+            "arn:aws:iam::123456789012:role/ApplicationIAMStack_IAM_Role",
+
+        RoleSessionName = "dotnet-aws-api-client"
+    },
+    CancellationToken.None);
+```
+**How the code snippet above works**
+- First constructing a `CredentialProfileChain` object
+- Then we try to obtain/populate the credentials (AWSCredentials) by calling `TryGetAWSCredentials`
+- The AWSCredentials object is then used to create an STS Client - `AmazonSecurityTokenServiceClient`
+- Finally a call to `AssumeRoleAsync` is made to create temporary credentials
+
+### 4. Obtain the API endpoint and API key
+
+Obtain the following values from the CDK deployment outputs or the AWS Console:
+
+- The API Gateway base URL
+- The AWS Region
+- The API key
+- A valid person ID
+
+The API URL follows this format:
+
+```text
+https://<api-id>.execute-api.<region>.amazonaws.com/<api-stage>
+```
+
+Keep the API key out of source control, application logs, screenshots, and committed configuration files.
+
+An API key is not an authentication credential. IAM and SigV4 provide authorization; the API key is used for client identification, throttling, and usage-plan management.
+
+### 5. Send a signed request
+
+Use an AWS SDK or another SigV4-capable HTTP client. Avoid constructing the `Authorization` header manually.
+
+For example, `curl` versions with SigV4 support can call the API using the temporary credentials returned by STS:
+
+```bash
+curl \
+  --aws-sigv4 "aws:amz:<aws-region>:execute-api" \
+  --user "$AWS_ACCESS_KEY_ID:$AWS_SECRET_ACCESS_KEY" \
+  --header "x-amz-security-token: $AWS_SESSION_TOKEN" \
+  --header "x-api-key: $API_KEY" \
+  "https://<api-id>.execute-api.<aws-region>.amazonaws.com/<api-stage>/api/<person-id>"
+```
+
+The signing service must be:
+
+```text
+execute-api
+```
+
+The signing Region must match the Region in which API Gateway was deployed.
+
+Because the request uses temporary STS credentials, the `x-amz-security-token` header is required. SigV4-capable AWS SDK clients include this token automatically.
+
+The generated IAM policy grants access only to the explicitly configured HTTP methods and resource paths. A correctly signed request will still be rejected if its method or path is outside the role’s `execute-api:Invoke` permission.
+
+### Troubleshooting
+
+| Result | Likely cause |
+|---|---|
+| `403 Forbidden` | Missing or invalid API key, insufficient IAM permission, or an invalid signature |
+| `User is not authorized to perform execute-api:Invoke` | The wrong credentials were used, or the method/path is outside the generated IAM policy |
+| Invalid security token | The STS session token is missing, invalid, or expired |
+| Signature mismatch | The wrong Region or service name was used, headers changed after signing, or the machine clock is inaccurate |
+| Missing authentication token | The API stage, HTTP method, or resource path may be incorrect |
+| `AccessDenied` from `sts:AssumeRole` | The current principal does not match the trusted principal configured during deployment |
+
+For additional information, see:
+
+- [Control access to API Gateway using IAM](https://docs.aws.amazon.com/apigateway/latest/developerguide/permissions.html)
+- [AWS Signature Version 4](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_sigv.html)
+- [Assume an IAM role using the AWS CLI](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-cli.html)
+- [API Gateway usage plans and API keys](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-usage-plans.html)
+
 ## Tearing it down
 
 ```bash
@@ -402,7 +619,7 @@ You haven't bootstrapped. Run `cdk bootstrap aws://<ACCOUNT>/<REGION>`.
 **`cdk: command not found`**
 The CDK CLI isn't installed or isn't on your PATH. `npm install -g aws-cdk`.
 
-**`Unable to determine service/operation name to be authorised`, or credentials errors**
+**`Unable to determine service/operation name to be authorized`, or credentials errors**
 Your AWS credentials aren't configured or have expired. Run `aws sts get-caller-identity` to confirm.
 
 **Deployed, but cold starts are unchanged**

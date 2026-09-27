@@ -23,7 +23,7 @@ public class IamPermissionPolicyConstruct : Construct
             Actions = ["execute-api:Invoke"],
             Resources =
             [
-                $"arn:{Aws.PARTITION}:execute-api:{props.Region}:{props.AccountId}:{props.ApiId}/{props.Stage}/api/GET/*"
+                $"arn:{Aws.PARTITION}:execute-api:{props.Region}:{props.AccountId}:{props.ApiId}/{props.Stage}/{HttpMethod.Get}/api/people/*"
             ]
         }));
     }
